@@ -22,6 +22,12 @@ switch end_flag
     case 4
         fprintf(1, '@ %s Finished generating raw LFP.\n', dts);
         fprintf(fid, '@ %s Finished generating raw LFP.\n', dts);
+    case 5
+        fprintf(1, '@ %s Starting computing hp rms:\n', dts);
+        fprintf(fid, '@ %s Starting computing hp rms:\n', dts);
+    case 6
+        fprintf(1, '@ %s Finished computing hp rms:\n', dts);
+        fprintf(fid, '@ %s Finished computing hp rms:\n', dts);
 end
 fclose(fid);
 end

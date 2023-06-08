@@ -37,7 +37,8 @@ downsample_ratio = fs_raw/fs_LFP;
 %% Fitlering and Downsampling
 time_sample = downsample(D.Timestamps, fs_raw/fs_LFP);
 % timestamps = timestamps(1:sampling_freq/1000:SampleNum);
-lfp_size   = fliplr(size(downsample(D.Data.Data.mapped', downsample_ratio)));
+n_chan = size(D.Data.Data.mapped, 1);
+lfp_size = [n_chan, numel(time_sample)];
 lfp = NaN(lfp_size);
 for Channel = 1:lfp_size(1)
     toc

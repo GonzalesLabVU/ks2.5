@@ -1,4 +1,4 @@
-function test_ks_params(rootZ, rootO, chanMapFile, ops_list, varargin)
+function output_folder = test_ks_params(rootZ, rootO, chanMapFile, ops_list, varargin)
 %Edited Mar. 3rd 2023 from official KS2.5 main_kilosort
 %%  backward compatible input parser
 default_start_ops = 0;
