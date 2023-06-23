@@ -103,9 +103,15 @@ switch type
             fclose(file);
             samples = size(D.Data, 2);
         end
-         if samples ~= numel(D.Timestamps) || start_timestamp ~=D.Timestamps(1)
+         if samples ~= numel(D.Timestamps)
              warning('Timestamp corruption in: %s', jsonFile)
-             D.Timestamps = start_timestamp + int64(0:(samples - 1))';
+             if ~isempty(start_timestamp)
+                 D.Timestamps = start_timestamp + int64(0:(samples - 1))';
+             elseif (D.Timestamps(end) - D.Timestamps(1) + 1) == int64(samples)
+                 D.Timestamps = D.Timestamps(1):D.Timestamps(end);
+             else
+                 error('No correction found for imestamp corruption in: %s', jsonFile)
+             end
         end
     case 'spikes'
         D.Timestamps = readNPY(fullfile(folder,'spike_times.npy'));

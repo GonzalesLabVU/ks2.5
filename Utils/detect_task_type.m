@@ -1,6 +1,6 @@
 function [task_type, state_code_threshold, align_event_order_in_queue] = detect_task_type(AllData, varargin)
-task_types_to_match = {'odr', 'odrdist', 'biasedodr', 'calib', 'fix'};
-state_code_threshold_list = [7, 9, 7, -99, 7];
+task_types_to_match = {'odr', 'odrdist', 'biasedodr', 'odr_opto', 'calib', 'fix'};
+state_code_threshold_list = [7, 9, 7, 7, -99, 7];
 if numel(varargin) > 0
     task_types_to_match = varargin{1};
 end
@@ -22,7 +22,7 @@ if state_code_threshold >= 7
 else
     align_event_order_in_queue = -99;
 end
-if ismember(task_types_to_match{matched_}, {'fix'}) 
+if ismember(task_types_to_match{task_idx}, {'fix'}) 
     align_event_order_in_queue = 1;
 end
 end

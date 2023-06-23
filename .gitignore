@@ -1,2 +1,7 @@
+**/*.asv
 /ks_log.txt
 /Misc/
+/Analysis/
+/Figures/
+/Obsolete/
+/External/crameri-main/

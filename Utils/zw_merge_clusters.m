@@ -28,22 +28,25 @@ sp_new      = merge_cids(sp, cids_unmerged);
 for i = 1:numel(sp_new.cids)
     to_merge = find(cids_unmerged == sp_new.cids(i));
     if numel(to_merge) > 1
-        %   Averaging channel amplitude for estimating merged cluster
-        %   location. Template projections cannot be easily recomputed.
+        %   Weighted averages of channel amplitude and location for merged
+        %   clusters. Template projections cannot be easily recomputed.
         %   Averaging templates and waveforms for a qualitative
         %   representation. Actual spike waveforms should be extracted
         %   using getWaveForms.m for analysis.
-        sp_new.tempChanAmps_full(i, :) = sum(bsxfun(@times, sp.tempChanAmps_full(to_merge, :), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.templateYs(i)           = sum(bsxfun(@times, sp.templateYs(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.templateXs(i)           = sum(bsxfun(@times, sp.templateXs(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.waveforms(i, :)         = sum(bsxfun(@times, sp.waveforms(to_merge, :), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.temps(i, :, :)          = sum(bsxfun(@times, sp.temps(to_merge, :, :), (sp.n_st(to_merge) .* sp.clusterTempScalingAmps(to_merge))))/sum(sp.n_st(to_merge) .* sp.clusterTempScalingAmps(to_merge));
+        sp_new.tempChanAmps_full(i, :)   = sum(bsxfun(@times, sp.tempChanAmps_full(to_merge, :), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.templateYs(i)             = sum(bsxfun(@times, sp.templateYs(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.templateXs(i)             = sum(bsxfun(@times, sp.templateXs(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.waveforms(i, :)           = sum(bsxfun(@times, sp.waveforms(to_merge, :), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.temps(i, :, :)            = sum(bsxfun(@times, sp.temps(to_merge, :, :), (sp.n_st(to_merge) .* sp.clusterTempScalingAmps(to_merge))))/sum(sp.n_st(to_merge) .* sp.clusterTempScalingAmps(to_merge));
+        sp_new.tempAmps(i)               = sum(bsxfun(@times, sp.tempAmps(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.clusterTempScalingAmps(i) = sum(bsxfun(@times, sp.clusterTempScalingAmps(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
     else %  Re-indexing of unchanged clusters
         sp_new.tempChanAmps_full(i, :) = sp.tempChanAmps_full(to_merge, :);
         sp_new.templateYs(i)           = sp.templateYs(to_merge);
         sp_new.templateXs(i)           = sp.templateXs(to_merge);
         sp_new.waveforms(i, :)         = sp.waveforms(to_merge, :);
         sp_new.temps(i, :, :)          = sp.temps(to_merge, :, :);
+        sp_new.tempAmps(i)             = sp.tempAmps(to_merge);
     end
     if sp_new.cids(i) < 0
         sp_new.cgs(i)                  = 0; % Unclustered

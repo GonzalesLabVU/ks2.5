@@ -4,6 +4,7 @@ function oe_structure = loadOE(session)
 % Decoding channels in the Digital Inputs of the acquisition board
 % connected via an OE I/O board
 % (https://open-ephys.github.io/acq-board-docs/User-Manual/Peripheral-devices.html#peripheraldevices)
+adc_helper_channel_state   = 4;   %  DC channel reporting adc events (e.g. laser)
 session_time_channel_state = 3;   %  DC channel for session on
 trial_time_channel_state   = 2;   %  DC channel for trial on
 photodiode_channel_state   = 1;   %  DC channel for cue on
@@ -40,6 +41,7 @@ end
 oe_structure.session_time_event    = [channel_sample_(channel_state_ == session_time_channel_state), channel_sample_(channel_state_ == -session_time_channel_state)];
 oe_structure.trial_time_event      = [channel_sample_(channel_state_ == trial_time_channel_state), channel_sample_(channel_state_ == -trial_time_channel_state)];
 oe_structure.photodiode_time_event = [channel_sample_(channel_state_ == photodiode_channel_state), channel_sample_(channel_state_ == -photodiode_channel_state)];
+oe_structure.adc_helper_time_event = [channel_sample_(channel_state_ == adc_helper_channel_state), channel_sample_(channel_state_ == -adc_helper_channel_state)];
 oe_structure.photodiode_time_event = fix_photodiode_gap(oe_structure.photodiode_time_event, fs);
 end
 %%

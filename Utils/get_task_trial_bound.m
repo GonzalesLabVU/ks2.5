@@ -12,7 +12,7 @@ switch task_type
     case 'odrdist'
         pre_photodiode_dur  = parameters.FixAquisition + parameters.fixationDuration;
         post_photodiode_dur = 2 * (parameters.stimulusDuration + parameters.delayDuration) + parameters.TargetAquisition + parameters.targetDuration;
-    case {'odr', 'biasedodr'}
+    case {'odr', 'biasedodr', 'odr_opto'}
         pre_photodiode_dur  = parameters.FixAquisition + parameters.fixationDuration;
         post_photodiode_dur = parameters.stimulusDuration + parameters.delayDuration + parameters.TargetAquisition + parameters.targetDuration;
     case 'fix'

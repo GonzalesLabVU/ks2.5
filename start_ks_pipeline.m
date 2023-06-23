@@ -6,14 +6,14 @@ zw_setpath;
 log_file = 'ks_log.txt';
 %%  Find behavior and OE files
 % subject_identifier = {'PIC', 'ROS', 'UNI', 'OLI', 'TRI', 'VIK'};
-subject_identifier = {'PIC'};
-session_range = [];
+subject_identifier = {'UNI'};
+session_range = [111];
 beh_dir = 'F:\Database\VanderbiltDAQ\beh'; % Folder for behavior files
 daq_dir = 'F:\Database\VanderbiltDAQ\Open Ephys'; % Folder for raw ephys data files
 ks_dir  = 'F:\Database\VanderbiltDAQ\KS_out'; % Folder for storing sorted data
 raw_lfp_dir = 'F:\Database\VanderbiltDAQ\raw_LFP'; % Folder for storing filtered and downsampled LFP data
 sessions = find_oe_beh_files(beh_dir, daq_dir, subject_identifier, session_range);
-check_sorted_session(sessions);
+% check_sorted_session(sessions);
 %%  list of ops parameters to test
 %   Do not change parameters used for whitening, since whitened data is
 %   shared across runs.
@@ -47,3 +47,11 @@ log_ks(sessions, log_file, 4);
 log_ks(sessions, log_file, 5);
 create_ks_rms(sessions, raw_lfp_dir);
 log_ks(sessions, log_file, 6);
+%%  Find ADC events
+for i = 1:numel(sessions)
+    oe = loadOE(sessions(i));
+    chanMapFile = find_chanMapFile(oe);
+    if ~isempty(regexp(chanMapFile, 'adc', 'once'))
+        create_adc_raw(sessions(i), raw_lfp_dir)
+    end
+end

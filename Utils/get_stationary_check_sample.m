@@ -9,5 +9,7 @@ switch task_type
         relative_sample = (- MatData.sample_rate * MatData.parameters.fixationDuration + 1):0;
     case 'fix'
         relative_sample = 0:(MatData.sample_rate * MatData.parameters.fixationDuration - 1);
+    case 'odr_opto'
+        relative_sample = (- MatData.sample_rate * MatData.parameters.fixationDuration + 1):(- MatData.sample_rate * MatData.parameters.fixationDuration / 2);
 end
 end

@@ -1,4 +1,9 @@
 function [psth, t_centers] = zw_spike_time_to_psth(st, bin_width, step, t_range)
+if any(isnan(t_range))
+    psth = nan;
+    t_centers = nan;
+    return
+end
 fine_step_scale = gcd(1000*bin_width, 1000*step);
 fine_step = fine_step_scale/1000;
 ratio_bin = 1000*bin_width/fine_step_scale;

@@ -1,0 +1,294 @@
+@ 07-Jun-2023 17:48:09 Starting sorting the following sessions:
+PIC081_2022-11-03_12-51-18
+PIC082_2022-11-04_10-15-27
+PIC083_2022-11-07_13-07-19
+PIC085_2022-11-11_11-52-01
+PIC086_2022-11-14_14-16-45
+PIC087_2022-11-15_13-00-40
+PIC088_2022-11-16_11-57-12
+PIC089_2022-11-17_12-07-37
+PIC090_2022-11-21_10-40-34
+PIC091_2022-11-22_12-07-37
+PIC092_2022-11-23_11-01-41
+PIC093_2022-11-30_13-00-04
+PIC094_2022-12-01_12-46-56
+PIC095_2022-12-05_13-05-08
+PIC096_2022-12-06_13-49-48
+PIC097_2022-12-07_12-55-09
+PIC098_2022-12-08_12-07-23
+PIC099_2022-12-09_12-03-40
+PIC100_2022-12-13_12-26-44
+PIC101_2022-12-14_13-07-29
+PIC102_2022-12-15_13-41-30
+@ 07-Jun-2023 18:28:27 Starting sorting the following sessions:
+PIC081_2022-11-03_12-51-18
+PIC082_2022-11-04_10-15-27
+PIC083_2022-11-07_13-07-19
+PIC085_2022-11-11_11-52-01
+PIC086_2022-11-14_14-16-45
+PIC087_2022-11-15_13-00-40
+PIC088_2022-11-16_11-57-12
+PIC089_2022-11-17_12-07-37
+PIC090_2022-11-21_10-40-34
+PIC091_2022-11-22_12-07-37
+PIC092_2022-11-23_11-01-41
+PIC093_2022-11-30_13-00-04
+PIC094_2022-12-01_12-46-56
+PIC095_2022-12-05_13-05-08
+PIC096_2022-12-06_13-49-48
+PIC097_2022-12-07_12-55-09
+PIC098_2022-12-08_12-07-23
+PIC099_2022-12-09_12-03-40
+PIC100_2022-12-13_12-26-44
+PIC101_2022-12-14_13-07-29
+PIC102_2022-12-15_13-41-30
+@ 07-Jun-2023 18:30:14 Starting sorting the following sessions:
+PIC081_2022-11-03_12-51-18
+PIC082_2022-11-04_10-15-27
+PIC083_2022-11-07_13-07-19
+PIC085_2022-11-11_11-52-01
+PIC086_2022-11-14_14-16-45
+PIC087_2022-11-15_13-00-40
+PIC088_2022-11-16_11-57-12
+PIC089_2022-11-17_12-07-37
+PIC090_2022-11-21_10-40-34
+PIC091_2022-11-22_12-07-37
+PIC092_2022-11-23_11-01-41
+PIC093_2022-11-30_13-00-04
+PIC094_2022-12-01_12-46-56
+PIC095_2022-12-05_13-05-08
+PIC096_2022-12-06_13-49-48
+PIC097_2022-12-07_12-55-09
+PIC098_2022-12-08_12-07-23
+PIC099_2022-12-09_12-03-40
+PIC100_2022-12-13_12-26-44
+PIC101_2022-12-14_13-07-29
+PIC102_2022-12-15_13-41-30
+@ 07-Jun-2023 18:48:58 Finished sorting
+PIC081_2022-11-03_12-51-18
+.@ 07-Jun-2023 19:15:03 Finished sorting
+PIC082_2022-11-04_10-15-27
+.@ 07-Jun-2023 19:43:59 Finished sorting
+PIC083_2022-11-07_13-07-19
+.@ 07-Jun-2023 20:23:10 Finished sorting
+PIC085_2022-11-11_11-52-01
+.@ 07-Jun-2023 21:06:20 Finished sorting
+PIC086_2022-11-14_14-16-45
+.@ 07-Jun-2023 21:46:07 Finished sorting
+PIC087_2022-11-15_13-00-40
+.@ 07-Jun-2023 22:15:28 Finished sorting
+PIC088_2022-11-16_11-57-12
+.@ 07-Jun-2023 22:38:55 Finished sorting
+PIC089_2022-11-17_12-07-37
+.@ 07-Jun-2023 22:58:51 Finished sorting
+PIC090_2022-11-21_10-40-34
+.@ 07-Jun-2023 23:31:07 Finished sorting
+PIC091_2022-11-22_12-07-37
+.@ 08-Jun-2023 00:03:08 Finished sorting
+PIC092_2022-11-23_11-01-41
+.@ 08-Jun-2023 00:35:19 Finished sorting
+PIC093_2022-11-30_13-00-04
+.@ 08-Jun-2023 01:08:08 Finished sorting
+PIC094_2022-12-01_12-46-56
+.@ 08-Jun-2023 01:31:30 Finished sorting
+PIC095_2022-12-05_13-05-08
+.@ 08-Jun-2023 01:57:58 Finished sorting
+PIC096_2022-12-06_13-49-48
+.@ 08-Jun-2023 03:12:12 Finished sorting
+PIC097_2022-12-07_12-55-09
+.@ 08-Jun-2023 04:30:25 Finished sorting
+PIC098_2022-12-08_12-07-23
+.@ 08-Jun-2023 05:31:26 Finished sorting
+PIC099_2022-12-09_12-03-40
+.@ 08-Jun-2023 06:36:24 Finished sorting
+PIC100_2022-12-13_12-26-44
+.@ 08-Jun-2023 07:36:59 Finished sorting
+PIC101_2022-12-14_13-07-29
+.@ 08-Jun-2023 08:24:43 Finished sorting
+PIC102_2022-12-15_13-41-30
+.@ 08-Jun-2023 08:24:43 Starting generating raw LFP:
+@ 08-Jun-2023 10:38:57 Starting computing hp rms:
+@ 08-Jun-2023 10:42:28 Finished computing hp rms:
+@ 08-Jun-2023 10:46:50 Finished sorting
+PIC081_2022-11-03_12-51-18
+.@ 08-Jun-2023 10:46:53 Finished sorting
+PIC082_2022-11-04_10-15-27
+.@ 08-Jun-2023 10:46:57 Finished sorting
+PIC083_2022-11-07_13-07-19
+.@ 08-Jun-2023 10:47:02 Finished sorting
+PIC085_2022-11-11_11-52-01
+.@ 08-Jun-2023 10:47:08 Finished sorting
+PIC086_2022-11-14_14-16-45
+.@ 08-Jun-2023 10:47:11 Finished sorting
+PIC087_2022-11-15_13-00-40
+.@ 08-Jun-2023 10:47:15 Finished sorting
+PIC088_2022-11-16_11-57-12
+.@ 08-Jun-2023 10:47:18 Finished sorting
+PIC089_2022-11-17_12-07-37
+.@ 08-Jun-2023 10:47:21 Finished sorting
+PIC090_2022-11-21_10-40-34
+.@ 08-Jun-2023 10:47:25 Finished sorting
+PIC091_2022-11-22_12-07-37
+.@ 08-Jun-2023 10:47:29 Finished sorting
+PIC092_2022-11-23_11-01-41
+.@ 08-Jun-2023 10:47:35 Finished sorting
+PIC093_2022-11-30_13-00-04
+.@ 08-Jun-2023 10:47:40 Finished sorting
+PIC094_2022-12-01_12-46-56
+.@ 08-Jun-2023 10:47:43 Finished sorting
+PIC095_2022-12-05_13-05-08
+.@ 08-Jun-2023 10:47:45 Finished sorting
+PIC096_2022-12-06_13-49-48
+.@ 08-Jun-2023 10:47:50 Finished sorting
+PIC097_2022-12-07_12-55-09
+.@ 08-Jun-2023 10:47:55 Finished sorting
+PIC098_2022-12-08_12-07-23
+.@ 08-Jun-2023 10:47:59 Finished sorting
+PIC099_2022-12-09_12-03-40
+.@ 08-Jun-2023 10:48:04 Finished sorting
+PIC100_2022-12-13_12-26-44
+.@ 08-Jun-2023 10:48:07 Finished sorting
+PIC101_2022-12-14_13-07-29
+.@ 08-Jun-2023 10:48:10 Finished sorting
+PIC102_2022-12-15_13-41-30
+.@ 08-Jun-2023 10:48:11 Starting generating raw LFP:
+@ 08-Jun-2023 17:54:26 Finished generating LFP
+PIC081_2022-11-03_12-51-18.
+@ 08-Jun-2023 23:12:07 Finished generating LFP
+PIC082_2022-11-04_10-15-27.
+@ 09-Jun-2023 05:25:15 Finished generating LFP
+PIC083_2022-11-07_13-07-19.
+@ 09-Jun-2023 13:55:27 Finished generating LFP
+PIC085_2022-11-11_11-52-01.
+@ 10-Jun-2023 00:18:24 Finished generating LFP
+PIC086_2022-11-14_14-16-45.
+@ 10-Jun-2023 06:05:23 Finished generating LFP
+PIC087_2022-11-15_13-00-40.
+@ 10-Jun-2023 12:56:00 Finished generating LFP
+PIC088_2022-11-16_11-57-12.
+@ 10-Jun-2023 16:19:19 Finished generating LFP
+PIC089_2022-11-17_12-07-37.
+@ 10-Jun-2023 20:47:33 Finished generating LFP
+PIC090_2022-11-21_10-40-34.
+@ 11-Jun-2023 04:31:52 Finished generating LFP
+PIC091_2022-11-22_12-07-37.
+@ 11-Jun-2023 11:49:22 Finished generating LFP
+PIC092_2022-11-23_11-01-41.
+@ 11-Jun-2023 20:39:21 Finished generating LFP
+PIC093_2022-11-30_13-00-04.
+@ 12-Jun-2023 05:17:21 Finished generating LFP
+PIC094_2022-12-01_12-46-56.
+@ 12-Jun-2023 07:00:08 Finished sorting
+UNI105_2023-06-09_13-53-32
+.@ 12-Jun-2023 07:00:09 Starting generating raw LFP:
+@ 12-Jun-2023 07:09:05 Finished generating LFP
+UNI105_2023-06-09_13-53-32.
+@ 12-Jun-2023 07:09:05 Finished generating raw LFP.
+@ 12-Jun-2023 07:09:05 Starting computing hp rms:
+@ 12-Jun-2023 07:09:13 Finished computing hp rms:
+@ 13-Jun-2023 18:19:43 Finished sorting
+UNI106_2023-06-13_12-28-28
+.@ 13-Jun-2023 18:19:44 Starting generating raw LFP:
+@ 13-Jun-2023 18:29:12 Finished generating LFP
+UNI106_2023-06-13_12-28-28.
+@ 13-Jun-2023 18:29:12 Finished generating raw LFP.
+@ 13-Jun-2023 18:29:12 Starting computing hp rms:
+@ 13-Jun-2023 18:29:19 Finished computing hp rms:
+@ 15-Jun-2023 14:27:50 Finished sorting
+UNI107_2023-06-14_12-16-21
+.@ 15-Jun-2023 14:46:15 Finished sorting
+UNI108_2023-06-15_12-09-04
+.@ 15-Jun-2023 14:46:15 Starting generating raw LFP:
+@ 15-Jun-2023 14:55:27 Finished generating LFP
+UNI107_2023-06-14_12-16-21.
+@ 15-Jun-2023 15:05:14 Finished generating LFP
+UNI108_2023-06-15_12-09-04.
+@ 15-Jun-2023 15:05:14 Finished generating raw LFP.
+@ 15-Jun-2023 15:05:14 Starting computing hp rms:
+@ 15-Jun-2023 15:05:29 Finished computing hp rms:
+@ 19-Jun-2023 20:24:45 Finished sorting
+ROS096_2022-08-02_11-36-58
+.@ 19-Jun-2023 20:29:51 Finished sorting
+ROS097_2022-08-03_10-56-45
+.@ 19-Jun-2023 20:34:50 Finished sorting
+ROS098_2022-08-04_10-55-33
+.@ 19-Jun-2023 22:11:50 Finished sorting
+ROS096_2022-08-02_11-36-58
+.@ 19-Jun-2023 22:11:51 Finished sorting
+ROS097_2022-08-03_10-56-45
+.@ 19-Jun-2023 22:11:53 Finished sorting
+ROS098_2022-08-04_10-55-33
+.@ 19-Jun-2023 22:18:32 Finished sorting
+ROS100_2022-08-08_11-52-03
+.@ 19-Jun-2023 22:19:19 Finished sorting
+ROS096_2022-08-02_11-36-58
+.@ 19-Jun-2023 22:19:20 Finished sorting
+ROS097_2022-08-03_10-56-45
+.@ 19-Jun-2023 22:19:22 Finished sorting
+ROS098_2022-08-04_10-55-33
+.@ 19-Jun-2023 22:19:23 Finished sorting
+ROS100_2022-08-08_11-52-03
+.@ 19-Jun-2023 22:24:03 Finished sorting
+ROS102_2022-08-11_10-35-09
+.@ 19-Jun-2023 22:29:17 Finished sorting
+ROS103_2022-08-12_11-30-36
+.@ 19-Jun-2023 22:36:06 Finished sorting
+ROS104_2022-08-16_11-24-58
+.@ 19-Jun-2023 22:42:14 Finished sorting
+ROS105_2022-08-17_11-38-59
+.@ 19-Jun-2023 22:42:14 Starting generating raw LFP:
+@ 19-Jun-2023 22:44:45 Finished generating LFP
+ROS096_2022-08-02_11-36-58.
+@ 19-Jun-2023 22:46:49 Finished generating LFP
+ROS097_2022-08-03_10-56-45.
+@ 19-Jun-2023 22:49:20 Finished generating LFP
+ROS098_2022-08-04_10-55-33.
+@ 19-Jun-2023 22:52:18 Finished generating LFP
+ROS100_2022-08-08_11-52-03.
+@ 19-Jun-2023 22:54:51 Finished generating LFP
+ROS102_2022-08-11_10-35-09.
+@ 19-Jun-2023 22:57:05 Finished generating LFP
+ROS103_2022-08-12_11-30-36.
+@ 19-Jun-2023 22:59:59 Finished generating LFP
+ROS104_2022-08-16_11-24-58.
+@ 19-Jun-2023 23:02:36 Finished generating LFP
+ROS105_2022-08-17_11-38-59.
+@ 19-Jun-2023 23:02:36 Finished generating raw LFP.
+@ 19-Jun-2023 23:02:36 Starting computing hp rms:
+@ 19-Jun-2023 23:02:52 Finished computing hp rms:
+@ 21-Jun-2023 16:03:46 Finished sorting
+ROS101_2022-08-10_12-05-09
+.@ 21-Jun-2023 16:03:46 Starting generating raw LFP:
+@ 21-Jun-2023 16:05:47 Finished generating LFP
+ROS101_2022-08-10_12-05-09.
+@ 21-Jun-2023 16:05:47 Finished generating raw LFP.
+@ 21-Jun-2023 16:05:47 Starting computing hp rms:
+@ 21-Jun-2023 16:05:49 Finished computing hp rms:
+@ 21-Jun-2023 16:58:32 Finished sorting
+UNI097_2023-04-04_10-40-42
+.@ 21-Jun-2023 16:58:32 Starting generating raw LFP:
+@ 21-Jun-2023 17:11:44 Finished generating LFP
+UNI097_2023-04-04_10-40-42.
+@ 21-Jun-2023 17:11:44 Finished generating raw LFP.
+@ 21-Jun-2023 17:11:44 Starting computing hp rms:
+@ 21-Jun-2023 17:11:51 Finished computing hp rms:
+@ 21-Jun-2023 17:32:08 Finished sorting
+UNI109_2023-06-16_11-38-46
+.@ 21-Jun-2023 17:49:02 Finished sorting
+UNI110_2023-06-21_12-01-38
+.@ 21-Jun-2023 17:49:02 Starting generating raw LFP:
+@ 21-Jun-2023 17:55:08 Finished generating LFP
+UNI109_2023-06-16_11-38-46.
+@ 21-Jun-2023 18:07:43 Finished generating LFP
+UNI110_2023-06-21_12-01-38.
+@ 21-Jun-2023 18:07:43 Finished generating raw LFP.
+@ 21-Jun-2023 18:07:43 Starting computing hp rms:
+@ 21-Jun-2023 18:07:58 Finished computing hp rms:
+@ 23-Jun-2023 14:29:57 Finished sorting
+UNI111_2023-06-23_12-31-34
+.@ 23-Jun-2023 14:29:58 Starting generating raw LFP:
+@ 23-Jun-2023 14:41:45 Finished generating LFP
+UNI111_2023-06-23_12-31-34.
+@ 23-Jun-2023 14:41:45 Finished generating raw LFP.
+@ 23-Jun-2023 14:41:45 Starting computing hp rms:
+@ 23-Jun-2023 14:41:53 Finished computing hp rms:

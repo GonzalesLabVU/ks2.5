@@ -10,7 +10,9 @@ color = [0 0 1];
 max_psth        = 0;
 all_mean_psth = squeeze(nanmean(MatData.psth(:, target_neuron, :), 1));
 max_psth      = max(max_psth, max(all_mean_psth, [], 'all')) + 1;
-target_trials = find([MatData.trials.Statecode] >= statecode_threshold);
+statcode_mask = [MatData.trials.Statecode] >= statecode_threshold;
+align_event_mask = cellfun(@(x) ~isempty(x), {MatData.trials.(align_event)});
+target_trials = find(statcode_mask .* align_event_mask);
 
 x_to_plot = [];
 y_to_plot = [];
