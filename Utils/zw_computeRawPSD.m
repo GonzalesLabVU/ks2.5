@@ -10,10 +10,11 @@ function [psdPerChannel, f] = zw_computeRawPSD(ksDir)
 pars = loadParamsPy(fullfile(ksDir, 'params.py'));
 
 n_window = 500;
-n_fft = [];
+f_res    = 10;
 segment_dur = 20;
 n_rand_segments = 10;
 fs = pars.sample_rate;
+n_fft = fs/f_res;
 nCh = pars.n_channels_dat;
 n_sample_per_segment = fs * segment_dur;
 [~, f] = pwelch(zeros([n_sample_per_segment, 1]), [], [], n_fft, fs, 'onesided');

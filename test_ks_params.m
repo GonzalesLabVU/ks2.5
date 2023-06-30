@@ -21,6 +21,7 @@ for i_ops_list = p.Results.start_ops:numel(ops_list)
     current_ops_json = fullfile(current_output, 'ops.txt');
     current_ops_mat  = fullfile(current_output, 'ops.mat');
     run(fullfile(pathToYourConfigFile, 'configFile_default.m'))
+    ops.NT           = round((ops.NT - ops.ntbuff) * (128/min(128, ops.NchanTOT))/32)*32 + ops.ntbuff;
     % find the binary file
     fs          = [dir(fullfile(rootZ, '*.bin')) dir(fullfile(rootZ, '*.dat'))];
     ops.fbinary = fullfile(rootZ, fs(1).name);
