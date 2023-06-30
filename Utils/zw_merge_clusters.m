@@ -33,29 +33,35 @@ for i = 1:numel(sp_new.cids)
         %   Averaging templates and waveforms for a qualitative
         %   representation. Actual spike waveforms should be extracted
         %   using getWaveForms.m for analysis.
-        sp_new.tempChanAmps_full(i, :)   = sum(bsxfun(@times, sp.tempChanAmps_full(to_merge, :), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.templateYs(i)             = sum(bsxfun(@times, sp.templateYs(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.templateXs(i)             = sum(bsxfun(@times, sp.templateXs(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.waveforms(i, :)           = sum(bsxfun(@times, sp.waveforms(to_merge, :), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.temps(i, :, :)            = sum(bsxfun(@times, sp.temps(to_merge, :, :), (sp.n_st(to_merge) .* sp.clusterTempScalingAmps(to_merge))))/sum(sp.n_st(to_merge) .* sp.clusterTempScalingAmps(to_merge));
-        sp_new.tempAmps(i)               = sum(bsxfun(@times, sp.tempAmps(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
-        sp_new.clusterTempScalingAmps(i) = sum(bsxfun(@times, sp.clusterTempScalingAmps(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.clusterChanAmps_full(i, :) = sum(bsxfun(@times, sp.tempChanAmps_full(to_merge, :), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.clusterYs(i)               = sum(bsxfun(@times, sp.templateYs(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.clusterXs(i)               = sum(bsxfun(@times, sp.templateXs(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.cluster_waveforms(i, :)    = sum(bsxfun(@times, sp.waveforms(to_merge, :), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.cluster_temps(i, :, :)     = sum(bsxfun(@times, sp.temps(to_merge, :, :), (sp.n_st(to_merge) .* sp.clusterTempScalingAmps(to_merge))))/sum(sp.n_st(to_merge) .* sp.clusterTempScalingAmps(to_merge));
+        sp_new.cluster_tempAmps(i)        = sum(bsxfun(@times, sp.tempAmps(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
+        sp_new.clusterTempScalingAmps(i)  = sum(bsxfun(@times, sp.clusterTempScalingAmps(to_merge), sp.n_st(to_merge)))/sum(sp.n_st(to_merge));
     else %  Re-indexing of unchanged clusters
-        sp_new.tempChanAmps_full(i, :) = sp.tempChanAmps_full(to_merge, :);
-        sp_new.templateYs(i)           = sp.templateYs(to_merge);
-        sp_new.templateXs(i)           = sp.templateXs(to_merge);
-        sp_new.waveforms(i, :)         = sp.waveforms(to_merge, :);
-        sp_new.temps(i, :, :)          = sp.temps(to_merge, :, :);
-        sp_new.tempAmps(i)             = sp.tempAmps(to_merge);
+        sp_new.clusterChanAmps_full(i, :) = sp.tempChanAmps_full(to_merge, :);
+        sp_new.clusterYs(i)               = sp.templateYs(to_merge);
+        sp_new.clusterXs(i)               = sp.templateXs(to_merge);
+        sp_new.cluster_waveforms(i, :)    = sp.waveforms(to_merge, :);
+        sp_new.cluster_temps(i, :, :)     = sp.temps(to_merge, :, :);
+        sp_new.cluster_tempAmps(i)        = sp.tempAmps(to_merge);
     end
     if sp_new.cids(i) < 0
-        sp_new.cgs(i)                  = 0; % Unclustered
+        sp_new.cgs(i)                  = 0; % Noise
+        if isfield(sp, 'ks_label')
+            sp_new.ks_label(i)         = 0;
+        end
     else
-        sp_new.cgs(i)                  = mean(sp.cgs(to_merge));
+        % Take the mean when all labels non-zeros. When a cluster is
+        % similar to a noise cluster, deem both to be noises.
+        sp_new.cgs(i)                  = nonzero_mean(sp.cgs(to_merge)) * all(sp.cgs(to_merge));
+        if isfield(sp, 'ks_label')
+            sp_new.ks_label(i)         = nonzero_mean(sp.ks_label(to_merge)) * all(sp.ks_label(to_merge));
+        end
     end
 end
-%   Cluster depth based on amplitude center of mass
-% templateDepths = compute_depth_from_channel_amplitude(tempChanAmps_full);
 %%  Reassign natural cids
 natural_cids = 1:numel(sp_new.cids);
 sp_natural   = merge_cids(sp_new, natural_cids);
@@ -71,4 +77,8 @@ function sp_new = merge_cids(sp, cids_unmerged)
 sp_new.cids = unique(cids_unmerged); % @unique sorts small-to-large by default
 sp_new.clu  = cids_unmerged(ismember_locb(sp.clu, sp.cids));
 sp_new.st   = sp.st;
+end
+%%
+function out = nonzero_mean(in)
+out = mean(in(find(in)));
 end

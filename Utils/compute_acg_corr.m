@@ -1,11 +1,13 @@
 %%  ACG correlation matrix
 function acg_corr_matrix = compute_acg_corr(sp, varargin)
-n_acg_to_keep = 100;
+n_acg_to_keep     = 100;
 n_acg_to_keep_log = 67;
-acg_array = nan(numel(sp.cids), n_acg_to_keep);
-acg_array_log = nan(numel(sp.cids), n_acg_to_keep_log);
-for i = 1:numel(sp.cids)
-    st_ = sp.st(sp.clu == sp.cids(i));
+temp_ids          = [1:size(sp.temps)] - 1;
+n_temp            = numel(temp_ids);
+acg_array = nan(n_temp, n_acg_to_keep);
+acg_array_log = nan(n_temp, n_acg_to_keep_log);
+for i = 1:n_temp
+    st_ = sp.st(sp.clu == temp_ids(i));
     if isempty(st_)
         continue
     end

@@ -16,10 +16,10 @@ tic
 %%
 addpath(genpath('External')) % path to external functions
 %%
-cluster_info_directory = fullfile(neuron_output_directory, 'cluster_info');
-if ~isfolder(cluster_info_directory)
-    mkdir(cluster_info_directory);
-end
+% cluster_info_directory = fullfile(neuron_output_directory, 'cluster_info');
+% if ~isfolder(cluster_info_directory)
+%     mkdir(cluster_info_directory);
+% end
 %%
 for i_session = 1:numel(sessions)
     session = sessions(i_session);
@@ -49,7 +49,9 @@ for i_session = 1:numel(sessions)
     end
     %  Load spikes
     ks_out_folder = fullfile(ks_working_directory, session.daq_folder.name, num2str(ks_ops_idx), 'kilosort3');
-    sp = loadKSdir(ks_out_folder);
+    % loadKSdir ignores "noise" clusters by default, causing all unlabeled
+    % clusters to be treated as "noise" by default.
+    sp = loadKSdir(ks_out_folder, setfield(struct, 'excludeNoise', 0));
     sp = load_ks_extra(ks_out_folder, sp);
     sp = zw_merge_clusters(sp, fr_threshold);
     toc
