@@ -1,4 +1,4 @@
-function [psdPerChannel, f] = zw_computeRawPSD(ksDir)
+function [psdPerChannel, f] = zw_computeRawPSD(ksDir, varargin)
 % Edited from the Spikes function below. -ZW 6/8/2023 function
 % [rmsPerChannel, madPerChannel] = computeRawRMS(ksDir, gain[, rawDir])
 %
@@ -6,6 +6,12 @@ function [psdPerChannel, f] = zw_computeRawPSD(ksDir)
 %
 % ksDir is directory of kilosort results gainFactor will multiply the raw
 % data rawDir is location of raw file, if different from ksDir
+
+p = inputParser;
+p.addParameter('f', [], @isnumeric);
+p.parse(varargin{:});
+
+f = p.Results.f;
 
 pars = loadParamsPy(fullfile(ksDir, 'params.py'));
 
@@ -17,9 +23,9 @@ fs = pars.sample_rate;
 n_fft = fs/f_res;
 nCh = pars.n_channels_dat;
 n_sample_per_segment = fs * segment_dur;
-[~, f] = pwelch(zeros([n_sample_per_segment, 1]), [], [], n_fft, fs, 'onesided');
-% [~,f] = pmtm(zeros([n_sample_per_segment, 1]),[],[],fs,'onesided');
-
+if isempty(f)
+    [~, f] = pwelch(zeros([n_sample_per_segment, 1]), [], [], n_fft, fs, 'onesided');
+end
 rawFilename = pars.dat_path;
 Data = memmapfile(rawFilename,'Format',{pars.dtype, [nCh, n_sample_per_segment], 'segments'});
 n_segments = numel(Data.Data);
@@ -27,8 +33,7 @@ rand_segments = randperm(min(n_segments, n_rand_segments), n_rand_segments);
 psdPerChannel = zeros(nCh, numel(f), numel(rand_segments));
 for i = 1:numel(rand_segments)
     rawDat = double(Data.Data(rand_segments(i)).segments);
-    psdPerChannel(:, :, i) = pwelch(rawDat',[], [], n_fft, fs, 'onesided')';
-%     psdPerChannel(:, :, i) = pmtm(rawDat',[],[],fs,'onesided')';
+    psdPerChannel(:, :, i) = pwelch(rawDat',[], [], f, fs)';
     i
 end
 psdPerChannel = squeeze(mean(psdPerChannel, 3));

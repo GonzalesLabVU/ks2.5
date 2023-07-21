@@ -2,12 +2,12 @@
 function acg_corr_matrix = compute_acg_corr(sp, varargin)
 n_acg_to_keep     = 100;
 n_acg_to_keep_log = 67;
-temp_ids          = [1:size(sp.temps)] - 1;
-n_temp            = numel(temp_ids);
-acg_array = nan(n_temp, n_acg_to_keep);
-acg_array_log = nan(n_temp, n_acg_to_keep_log);
-for i = 1:n_temp
-    st_ = sp.st(sp.clu == temp_ids(i));
+cids          = sp.cids;
+n_cluster     = numel(cids);
+acg_array     = nan(n_cluster, n_acg_to_keep);
+acg_array_log = nan(n_cluster, n_acg_to_keep_log);
+for i = 1:n_cluster
+    st_ = sp.st(sp.clu == cids(i));
     if isempty(st_)
         continue
     end

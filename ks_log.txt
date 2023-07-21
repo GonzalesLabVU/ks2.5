@@ -292,3 +292,39 @@ UNI111_2023-06-23_12-31-34.
 @ 23-Jun-2023 14:41:45 Finished generating raw LFP.
 @ 23-Jun-2023 14:41:45 Starting computing hp rms:
 @ 23-Jun-2023 14:41:53 Finished computing hp rms:
+@ 27-Jun-2023 11:04:34 Finished sorting
+PIC117_2023-05-18_12-17-52
+.@ 27-Jun-2023 11:04:34 Starting generating raw LFP:
+@ 27-Jun-2023 11:18:49 Finished generating LFP
+PIC117_2023-05-18_12-17-52.
+@ 27-Jun-2023 11:18:49 Finished generating raw LFP.
+@ 27-Jun-2023 11:18:49 Starting computing hp rms:
+@ 27-Jun-2023 11:18:57 Finished computing hp rms:
+@ 10-Jul-2023 08:59:08 Finished sorting
+UNI112_2023-06-28_11-55-43
+.@ 10-Jul-2023 09:20:59 Finished sorting
+UNI113_2023-06-29_12-05-45
+.@ 10-Jul-2023 09:39:18 Finished sorting
+UNI114_2023-07-07_12-55-07
+.@ 10-Jul-2023 09:39:18 Starting generating raw LFP:
+@ 10-Jul-2023 09:54:17 Finished generating LFP
+UNI112_2023-06-28_11-55-43.
+@ 10-Jul-2023 10:06:39 Finished generating LFP
+UNI113_2023-06-29_12-05-45.
+@ 10-Jul-2023 10:17:52 Finished generating LFP
+UNI114_2023-07-07_12-55-07.
+@ 10-Jul-2023 10:17:52 Finished generating raw LFP.
+@ 10-Jul-2023 10:17:52 Starting computing hp rms:
+@ 10-Jul-2023 10:18:15 Finished computing hp rms:
+@ 12-Jul-2023 15:48:18 Finished sorting
+UNI115_2023-07-11_10-59-25
+.@ 12-Jul-2023 16:07:26 Finished sorting
+UNI116_2023-07-12_11-06-05
+.@ 12-Jul-2023 16:07:26 Starting generating raw LFP:
+@ 12-Jul-2023 16:24:10 Finished generating LFP
+UNI115_2023-07-11_10-59-25.
+@ 12-Jul-2023 16:34:39 Finished generating LFP
+UNI116_2023-07-12_11-06-05.
+@ 12-Jul-2023 16:34:40 Finished generating raw LFP.
+@ 12-Jul-2023 16:34:40 Starting computing hp rms:
+@ 12-Jul-2023 16:34:55 Finished computing hp rms:
