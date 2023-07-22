@@ -1,4 +1,6 @@
 function sp_new = compute_cluster_metrics(sp)
+%   Use spikeTemplates to compute weighted averages of spatiotemporal
+%   metrics for each cluster
 sp = compute_fr(sp);
 sp_new = sp;
 sp_new.similar_clusters = zeros(numel(sp.cids), numel(sp.cids));
@@ -19,7 +21,6 @@ for i = 1:numel(sp.cids)
     sp_new.cluster_temps(i, :, :)     = sum(bsxfun(@times, sp.temps(template_idx_in_cluster, :, :), (template_in_cluster_n_st .* sp.clusterTempScalingAmps(template_idx_in_cluster))), 1)/sum(template_in_cluster_n_st .* sp.clusterTempScalingAmps(template_idx_in_cluster));
     sp_new.cluster_tempAmps(i)        = sum(bsxfun(@times, sp.tempAmps(template_idx_in_cluster), template_in_cluster_n_st), 1)/sum(template_in_cluster_n_st);
     sp_new.clusterTempScalingAmps(i)  = sum(bsxfun(@times, sp.clusterTempScalingAmps(template_idx_in_cluster), template_in_cluster_n_st), 1)/sum(template_in_cluster_n_st);
-%     sp_new.clusterKSLabel(i)          = 
 end
 for i = 1:numel(sp.cids)
     for j = i:numel(sp.cids)
