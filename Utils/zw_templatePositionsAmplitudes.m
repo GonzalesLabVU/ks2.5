@@ -9,7 +9,7 @@ function sp = zw_templatePositionsAmplitudes(sp)
 % 3): Added the amplitude center of gravity along the x axis (templateXs)
 % to the output, so that distance measures can be carried out using
 % Euclidean distances
-% 4): Added a cluster average of tempScalingAmps (clusterTempScalingAmps)
+% 4): Added a template average of tempScalingAmps (averageTempScalingAmps)
 % -ZW 3/29/2023
 % zhengyang.wang@Vanderbilt.Edu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -84,8 +84,8 @@ tempAmps = tempAmps'; % for consistency, make first dimension template number
 
 % Compute avarage template scaling factor for each cluster
 cta = clusterAverage(spikeTemplates + 1, tempScalingAmps);
-clusterTempScalingAmps(tids+1) = cta;
-clusterTempScalingAmps = clusterTempScalingAmps';
+averageTempScalingAmps(tids+1) = cta;
+averageTempScalingAmps = averageTempScalingAmps';
 
 % Get channel with largest amplitude, take that as the waveform
 [~,max_site] = max(max(abs(temps),[],2),[],3);
@@ -110,7 +110,8 @@ sp.templateXs             = templateXs;
 sp.waveforms              = waveforms;
 sp.templateDuration       = templateDuration;
 sp.tempChanAmps_full      = tempChanAmps_full;
-sp.clusterTempScalingAmps = clusterTempScalingAmps;
+sp.averageTempScalingAmps = averageTempScalingAmps;
+sp.templateChan           = max_site;
 end
 
 

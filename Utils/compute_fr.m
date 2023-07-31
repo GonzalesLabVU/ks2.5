@@ -1,4 +1,8 @@
 function sp = compute_fr(sp)
+field_names = {'n_st', 'fr'};
+for field_name = field_names
+    sp = remove_field_contains(sp, field_name);
+end
 dur           = max(sp.st) - min(sp.st);
 sp.fr         = zeros(size(sp.cids))'; % Clusters along 1st dim
 sp.n_st       = sp.fr;

@@ -4,7 +4,7 @@ switch task
     case {'odr', 'biasedodr', 'odr_opto', 'fix'}
         timestamp_names = {'Fix_onT', 'Fix_inT', 'Cue_onT', 'Cue_offT', 'Fix_offT', 'Target_inT'};
     case 'odrdist'
-        timestamp_names = {'Fix_onT', 'Fix_inT', 'Cue_onT', 'Cue_offT', 'Sample_onT', 'Sample_offT', 'Fix_offT', 'Target_inT'};
+        timestamp_names = {'Fix_onT', 'Fix_inT', 'Cue_onT', 'Cue_offT', 'Dist_onT', 'Dist_offT', 'Fix_offT', 'Target_inT'};
 end
 for i = 1:numel(out_trials)
     for j = 1:numel(out_trials(i).timestamp_queue)

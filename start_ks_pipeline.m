@@ -6,8 +6,8 @@ zw_setpath;
 log_file = 'ks_log.txt';
 %%  Find behavior and OE files
 % subject_identifier = {'PIC', 'ROS', 'UNI', 'OLI', 'TRI', 'VIK'};
-subject_identifier = {'UNI'};
-session_range = [115:116];
+subject_identifier = {'PIC'};
+session_range = [109];
 beh_dir = 'F:\Database\VanderbiltDAQ\beh'; % Folder for behavior files
 daq_dir = 'F:\Database\VanderbiltDAQ\Open Ephys'; % Folder for raw ephys data files
 ks_dir  = 'F:\Database\VanderbiltDAQ\KS_out'; % Folder for storing sorted data

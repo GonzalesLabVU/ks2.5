@@ -6,8 +6,7 @@ spikeStructure.channel_map       = readNPY(fullfile(ksDir, 'channel_map.npy'));
 if exist(fullfile(ksDir, 'cluster_KSLabel.tsv'), 'file') 
         [cids_ks, ks_label]     = readClusterGroupsCSV(fullfile(ksDir, 'cluster_KSLabel.tsv'));
         cids_cgs                = spikeStructure.cids;
-        cgs                     = spikeStructure.cgs;
-%         assert(numel(cids_ks) == numel(cids_cgs), 'Cluster id mismatch in %s', ksDir);
+        assert(numel(cids_ks) == numel(cids_cgs), 'Cluster id mismatch in %s', ksDir);
         spikeStructure.ks_label = ks_label;
         % Make sure cids ref. original template ids
 %         temp_ids                  = [1:size(spikeStructure.temps, 1)] - 1;

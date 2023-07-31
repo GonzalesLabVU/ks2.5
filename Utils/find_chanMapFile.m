@@ -1,6 +1,8 @@
 function chanMapFile = find_chanMapFile(oe)
 n_chan = oe.oe_info.continuous.num_channels;
 switch n_chan
+    case 1
+        chanMapFile = 'tungsten_1.mat';
     case 16
         chanMapFile = 'Linear_16_ch_150_pitch_plexon_V.mat';
     case 32

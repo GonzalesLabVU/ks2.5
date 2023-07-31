@@ -1,7 +1,12 @@
-function sp = zw_merge_clusters(sp, fr_treshold)
+function sp = zw_merge_clusters(sp, varargin)
 % ZW_MERGE_CLUSTERS takes the raw kilosort 2.5 output, compute an
 % adjancency matrix for cluster pairs, merge clusters, recompute cluster
 % parameters, weed out low firing clusters and re-index for output.
+%%
+p = inputParser;
+p.addParameter('fr_treshold', 0.1);
+p.parse(varargin{:});
+fr_treshold = p.Results.fr_treshold;
 %%  Load data
 sp = zw_templatePositionsAmplitudes(sp);
 sp = compute_cluster_metrics(sp);
@@ -18,9 +23,10 @@ idx_unmerged      = conncomp(graph(sp.adj_matrix), 'OutputForm', 'vector');
 %%  Intermediate reassignment of clusters
 sp                 = merge_cids(sp, idx_unmerged);
 sp                 = compute_cluster_metrics(sp);
-idx_to_remove      = or(logical(sp.fr < fr_treshold), logical(sp.fr_overall < fr_treshold/4));
+idx_to_remove_fr   = or(logical(sp.fr < fr_treshold), logical(sp.fr_overall < fr_treshold/4));
+idx_to_remove_cgs  = sp.cgs' == 0;
 idx_unmerged       = 1:numel(sp.cids); % No-merge default
-idx_unmerged(idx_to_remove) = 0; %   Dummy code 0 for unwanted clusters
+idx_unmerged(idx_to_remove_fr | idx_to_remove_cgs) = 0; %   Dummy code 0 for unwanted clusters
 sp                 = merge_cids(sp, idx_unmerged); % Use merge to clean unwanted clusters
 sp                 = compute_cluster_metrics(sp);
 %%  Re-populate parameters
