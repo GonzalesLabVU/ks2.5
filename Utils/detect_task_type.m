@@ -1,6 +1,6 @@
 function [task_type, state_code_threshold, align_event_order_in_queue] = detect_task_type(AllData, varargin)
 task_types_to_match = {'odr', 'odrdist', 'biasedodr', 'odr_opto', 'calib', 'fix'};
-state_code_threshold_list = [7, 9, 7, 7, -99, 7];
+state_code_threshold_list = [7, 9, 7, 7, -99, 7]; % Correct trial threshold
 if numel(varargin) > 0
     task_types_to_match = varargin{1};
 end
