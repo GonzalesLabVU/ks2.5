@@ -5,20 +5,21 @@ p = inputParser;
 addParameter(p,'abs_threshold', 0.7, @isnumeric)
 addParameter(p,'gap_threshold_t', 1, @isnumeric)
 addParameter(p,'target_channel', 129, @isnumeric)
+addParameter(p,'target_processor_idx', 1, @isnumeric)
 
 parse(p,varargin{:})
 
-abs_threshold    = p.Results.abs_threshold;
-gap_threshold_t  = p.Results.gap_threshold_t;
-target_channel   = p.Results.target_channel;
+abs_threshold        = p.Results.abs_threshold;
+gap_threshold_t      = p.Results.gap_threshold_t;
+target_channel       = p.Results.target_channel;
+target_processor_idx = p.Results.target_processor_idx;
 %%
 save_dir = fileparts(save_file);
 if ~isfolder(save_dir)
     mkdir(save_dir);
 end
 %% Load Data
-% [D, oebin_json] = loadData(oebin_file);
-D = loadData(oebin_file);
+D = loadData(oebin_file, 'processor_idx', target_processor_idx);
 bitVolts = [D.Header.channels.bit_volts];
 fs_raw = D.Header.sample_rate;
 %%
@@ -47,12 +48,6 @@ save(save_file, 'event_structure', '-v7.3');
 toc
 fprintf(1, 'Complete. MAT file saved to %s.\n', save_file);
 end
-%%
-function D = loadData(oebin_file)
-D = load_open_ephys_binary_timestamp_rescue(oebin_file,'continuous',1, 'mmap'); % load data in memory mapped mode
-
-end
-
 
 
 

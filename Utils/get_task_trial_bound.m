@@ -11,13 +11,13 @@ parameters = AllData.parameters;
 switch task_type
     case 'odrdist'
         pre_photodiode_dur  = parameters.FixAquisition + parameters.fixationDuration;
-        post_photodiode_dur = 2 * (parameters.stimulusDuration + parameters.delayDuration) + parameters.TargetAquisition + parameters.targetDuration;
+        post_photodiode_dur = 2 * (parameters.stimulusDuration + parameters.delayDuration) + parameters.TargetAquisition + parameters.targetDuration + parameters.ITI_Correct;
     case {'odr', 'biasedodr', 'odr_opto'}
         pre_photodiode_dur  = parameters.FixAquisition + parameters.fixationDuration;
-        post_photodiode_dur = parameters.stimulusDuration + parameters.delayDuration + parameters.TargetAquisition + parameters.targetDuration;
+        post_photodiode_dur = parameters.stimulusDuration + parameters.delayDuration + parameters.TargetAquisition + parameters.targetDuration + parameters.ITI_Correct;
     case 'fix'
         pre_photodiode_dur  = 0;
-        post_photodiode_dur = parameters.FixAquisition + parameters.fixationDuration;
+        post_photodiode_dur = parameters.FixAquisition + parameters.fixationDuration + parameters.ITI_Correct;
         padding_dur         = 1;
 end
 bound_dur = [padding_dur, padding_dur] + [pre_photodiode_dur, post_photodiode_dur];

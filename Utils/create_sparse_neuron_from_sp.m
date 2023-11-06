@@ -4,8 +4,12 @@ function create_sparse_neuron_from_sp(sessions, sp_directory, neuron_output_dire
 %%event information from the ADC channels, add them to trials.
 p = inputParser;
 p.addParameter('adc_input_directory', [], @isfolder);
+p.addParameter('split_by_area', []);
+p.addParameter('stationary', []);
 p.parse(varargin{:});
 adc_input_directory = p.Results.adc_input_directory;
+split_by_area       = p.Results.split_by_area;
+stationary           = p.Results.stationary;
 %
 tic
 %%
@@ -42,6 +46,11 @@ for i_session = 1:numel(sessions)
         continue
     end
     load(sp_dir, 'sp');
+    if split_by_area
+        [area_labels, sp] = parse_sp_by_area(sp);
+    else
+        area_labels = {''};
+    end
     toc
     task_counter = 0;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,19 +67,29 @@ for i_session = 1:numel(sessions)
         end
         task_counter = task_counter + 1;
         %   Temp AllData structure with spike time added
-        AllData_c = add_spikes_sparse(AllData, sp, oe, analog_events, task_counter);
-        toc
-        %
-        AllData_c.trials = rmfield(AllData_c.trials, {'eye_time', 'eye_loc'});
-        %   Give timestamp event names according to task type
-        AllData_c.trials = verbose_timestamps(AllData_c.trials, task_type);
-        %   Outputing
-        MatData            = gather_sp(AllData_c, sp);
-        MatData.beh_file   = session.beh_files(i_beh).name;
-        MatData.daq_folder = session.daq_folder.name;
-        MatData.task_type  = task_type;
-        MatData.state_code_threshold = state_code_threshold;
-        save(fullfile(neuron_output_directory, sprintf('%s_sparse', session.beh_files(i_beh).name(1:end - 4))), 'MatData');
+        for sp_idx = 1:numel(sp)
+            fname = fullfile(neuron_output_directory, sprintf('%s%s_sparse', session.beh_files(i_beh).name(1:end - 4), area_labels{sp_idx}));
+            if isfile(fname)
+                continue
+            end
+            sp_single = sp(sp_idx);
+            AllData_c = add_spikes_sparse(AllData, sp_single, oe, analog_events, task_counter);
+            toc
+            %
+            AllData_c.trials = rmfield(AllData_c.trials, {'eye_time', 'eye_loc'});
+            %   Give timestamp event names according to task type
+            AllData_c.trials = verbose_timestamps(AllData_c.trials, task_type);
+            %   Outputing
+            MatData            = gather_sp(AllData_c, sp_single);
+            MatData.beh_file   = session.beh_files(i_beh).name;
+            MatData.daq_folder = session.daq_folder.name;
+            MatData.task_type  = task_type;
+            MatData.state_code_threshold = state_code_threshold;
+            if stationary
+                MatData = stationarityCheck_wrapper(MatData, 'statecode_threshold', MatData.state_code_threshold - 2);
+            end
+            save(fname, 'MatData');
+        end
     end
     toc
 end

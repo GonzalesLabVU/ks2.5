@@ -17,7 +17,6 @@ for i = 1:numel(sp_files)
             sp.amp_rms(i_clu) = sp.cluster_tempAmps(i_clu)/rms_structure.rmsPerChannel(sp.cluster_chan(i_clu));
             sp.amp_mad(i_clu) = sp.cluster_tempAmps(i_clu)/rms_structure.madPerChannel(sp.cluster_chan(i_clu));
         end
-
     end
     save(fullfile(sp_files(i).folder, sp_files(i).name), 'sp');
 end

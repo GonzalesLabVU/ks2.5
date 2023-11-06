@@ -360,3 +360,72 @@ PIC109_2023-04-21_09-29-00.
 @ 22-Jul-2023 21:53:29 Finished generating raw LFP.
 @ 22-Jul-2023 21:53:29 Starting computing hp rms:
 @ 22-Jul-2023 21:53:37 Finished computing hp rms:
+@ 11-Sep-2023 16:25:11 Finished sorting
+PIC135_2023-09-07_11-27-44
+.@ 11-Sep-2023 16:25:11 Starting generating raw LFP:
+@ 11-Sep-2023 16:41:26 Finished generating LFP
+PIC135_2023-09-07_11-27-44.
+@ 11-Sep-2023 16:41:26 Finished generating raw LFP.
+@ 11-Sep-2023 16:41:26 Starting computing hp rms:
+@ 11-Sep-2023 16:41:35 Finished computing hp rms:
+@ 15-Sep-2023 10:51:17 Starting computing hp rms:
+@ 21-Sep-2023 17:58:09 Finished sorting
+UNI117_2023-07-13_11-18-40
+.@ 21-Sep-2023 17:58:09 Starting generating raw LFP:
+@ 21-Sep-2023 18:08:38 Finished generating LFP
+UNI117_2023-07-13_11-18-40.
+@ 21-Sep-2023 18:08:38 Finished generating raw LFP.
+@ 21-Sep-2023 18:08:38 Starting computing hp rms:
+@ 21-Sep-2023 18:08:46 Finished computing hp rms:
+@ 02-Oct-2023 11:17:25 Finished sorting
+FIO479_2_2023-08-21_11-19-18
+.@ 02-Oct-2023 11:17:25 Starting generating raw LFP:
+@ 02-Oct-2023 11:17:25 Finished generating raw LFP.
+@ 02-Oct-2023 11:31:24 Finished sorting
+FIO479_2_2023-08-21_11-19-18
+.@ 02-Oct-2023 11:31:24 Starting generating raw LFP:
+@ 02-Oct-2023 11:31:24 Finished generating raw LFP.
+@ 16-Oct-2023 10:16:52 Finished sorting
+OLI108_2023-10-12_13-34-06
+.@ 16-Oct-2023 10:33:41 Finished sorting
+OLI109_2023-10-13_11-59-53
+.@ 16-Oct-2023 10:33:41 Starting generating raw LFP:
+@ 16-Oct-2023 10:42:00 Finished generating LFP
+OLI108_2023-10-12_13-34-06.
+@ 16-Oct-2023 10:50:01 Finished generating LFP
+OLI109_2023-10-13_11-59-53.
+@ 16-Oct-2023 10:50:01 Finished generating raw LFP.
+@ 16-Oct-2023 10:50:01 Starting computing hp rms:
+@ 16-Oct-2023 10:50:16 Finished computing hp rms:
+@ 23-Oct-2023 10:40:54 Finished sorting
+OLI110_2023-10-17_13-14-51
+.@ 23-Oct-2023 10:52:37 Finished sorting
+OLI111_2023-10-20_14-28-59
+.@ 23-Oct-2023 10:52:37 Starting generating raw LFP:
+@ 23-Oct-2023 11:33:48 Finished generating LFP
+OLI110_2023-10-17_13-14-51.
+@ 23-Oct-2023 11:40:30 Finished generating LFP
+OLI111_2023-10-20_14-28-59.
+@ 23-Oct-2023 11:40:31 Finished generating raw LFP.
+@ 23-Oct-2023 11:40:31 Starting computing hp rms:
+@ 23-Oct-2023 11:40:48 Finished computing hp rms:
+@ 30-Oct-2023 10:08:01 Finished sorting
+OLI112_2023-10-24_12-31-05
+.@ 30-Oct-2023 10:36:59 Finished sorting
+OLI113_2023-10-25_13-23-49
+.@ 30-Oct-2023 10:49:05 Finished sorting
+OLI114_2023-10-26_13-24-39
+.@ 30-Oct-2023 11:05:20 Finished sorting
+OLI115_2023-10-27_12-11-36
+.@ 30-Oct-2023 11:05:20 Starting generating raw LFP:
+@ 30-Oct-2023 11:17:36 Finished generating LFP
+OLI112_2023-10-24_12-31-05.
+@ 30-Oct-2023 11:35:00 Finished generating LFP
+OLI113_2023-10-25_13-23-49.
+@ 30-Oct-2023 11:45:25 Finished generating LFP
+OLI114_2023-10-26_13-24-39.
+@ 30-Oct-2023 11:55:49 Finished generating LFP
+OLI115_2023-10-27_12-11-36.
+@ 30-Oct-2023 11:55:49 Finished generating raw LFP.
+@ 30-Oct-2023 11:55:49 Starting computing hp rms:
+@ 30-Oct-2023 11:56:20 Finished computing hp rms:

@@ -3,9 +3,7 @@ function sessions = find_oe_beh_files(beh_dir, daq_dir, subject_identifier_cell,
 %version 0.5.X
 %   Expected subfolder naming conventions
 newer_version = '0.6.0';
-daq_parent_folder = '\\Record Node*\\experiment*\\recording*\\';
-daq_event_folder = '\\Record Node*\\experiment*\\recording*\\events\\Rhythm_FPGA-100.0\\TTL_1\\';
-daq_continous_folder = '\\Record Node*\\experiment*\\recording*\\continuous\\Rhythm_FPGA-100.0\\';
+daq_parent_folder = '\\Record Node*\\experiment*\\recording*\\'; % Assumes singular experiment and recording
 if isempty(session_range)
     session_range = 1:1000;
 end
@@ -24,25 +22,63 @@ for i_subject = 1:numel(subject_identifier_cell)
             recording_folder = fullfile(sessions(session_counter).daq_folder.folder, sessions(session_counter).daq_folder.name, daq_parent_folder);
             sessions(session_counter).daq_files.oebin_file   = dir(fullfile(recording_folder, '*oebin'));
             sessions(session_counter).daq_files.sync_message = dir(fullfile(recording_folder, '*sync_messages*'));
+            sessions(session_counter).xml_file               = dir(fullfile(recording_folder, '..\..\settings.xml'));
             oe_info = jsondecode(fileread(fullfile(sessions(session_counter).daq_files.oebin_file.folder, sessions(session_counter).daq_files.oebin_file.name)));
-            daq_continous_folder = fullfile('continuous', oe_info.continuous.folder_name);
-            ttl_events           = cellfun(@(x) ~isempty(regexpi(x.channel_name, 'fpga', 'once')), oe_info.events);
-            daq_event_folder     = fullfile('events', oe_info.events{ttl_events}.folder_name);
+            sessions(session_counter).oe_info = oe_info;
+            %   Accepts only one processor with the most channels for sorting.
+            [~, daq_continuous_idx] = max(arrayfun(@(x) numel(x.channels), oe_info.continuous));
+            daq_continuous_folder   = fullfile('continuous', oe_info.continuous(daq_continuous_idx).folder_name);
+            %   Assumes the processor with ADC channels only as aux
+            %   event/analog channels
+            daq_aux_idx             = find(arrayfun(@(continuous) all(matlab_jsondecode_arrayfun_wrapper(@(x) contains(lower(x.channel_name), 'adc'), continuous.channels)), oe_info.continuous));
+            daq_aux_folder          = fullfile('continuous', oe_info.continuous(daq_aux_idx).folder_name);
+            %   Finds the digital inputs via OE I/O
+            daq_event_idx           = find(cellfun(@(x) ~isempty(regexpi(x.channel_name, 'fpga', 'once')), oe_info.events));
+            daq_event_folder        = fullfile('events', oe_info.events{daq_event_idx}.folder_name);
+            sessions(session_counter).daq_continuous_idx = daq_continuous_idx;
+            sessions(session_counter).daq_aux_idx        = daq_aux_idx;
+            sessions(session_counter).daq_event_idx      = daq_event_idx;
+            sessions(session_counter).daq_files.continuous_file         = dir(fullfile(recording_folder, daq_continuous_folder, 'continuous.dat'));
+            sessions(session_counter).daq_files.aux_file                = dir(fullfile(recording_folder, daq_aux_folder, 'continuous.dat'));
             if at_least_version(newer_version, oe_info.GUIVersion)
-                sessions(session_counter).daq_files.continuous_file         = dir(fullfile(recording_folder, daq_continous_folder, 'continuous.dat'));
-                sessions(session_counter).daq_files.synchronized_file       = dir(fullfile(recording_folder, daq_continous_folder, 'timestamps.npy'));
-                sessions(session_counter).daq_files.timestamps_file         = dir(fullfile(recording_folder, daq_continous_folder, 'sample_numbers.npy'));
+                sessions(session_counter).daq_files.synchronized_file       = dir(fullfile(recording_folder, daq_continuous_folder, 'timestamps.npy'));
+                sessions(session_counter).daq_files.timestamps_file         = dir(fullfile(recording_folder, daq_continuous_folder, 'sample_numbers.npy'));
                 sessions(session_counter).daq_files.channel_states_file     = dir(fullfile(recording_folder, daq_event_folder, 'states.npy'));
                 sessions(session_counter).daq_files.channel_timestamps_file = dir(fullfile(recording_folder, daq_event_folder, 'sample_numbers.npy'));
+                sessions(session_counter).daq_files.aux_synchronized_file   = dir(fullfile(recording_folder, daq_aux_folder, 'timestamps.npy'));
+                sessions(session_counter).daq_files.aux_timestamps_file     = dir(fullfile(recording_folder, daq_aux_folder, 'sample_numbers.npy'));
             else
-                sessions(session_counter).daq_files.continuous_file         = dir(fullfile(recording_folder, daq_continous_folder, 'continuous.dat'));
-                sessions(session_counter).daq_files.synchronized_file       = dir(fullfile(recording_folder, daq_continous_folder, 'synchronized_timestamps.npy'));
-                sessions(session_counter).daq_files.timestamps_file         = dir(fullfile(recording_folder, daq_continous_folder, 'timestamps.npy'));
+                sessions(session_counter).daq_files.synchronized_file       = dir(fullfile(recording_folder, daq_continuous_folder, 'synchronized_timestamps.npy'));
+                sessions(session_counter).daq_files.timestamps_file         = dir(fullfile(recording_folder, daq_continuous_folder, 'timestamps.npy'));
                 sessions(session_counter).daq_files.channel_states_file     = dir(fullfile(recording_folder, daq_event_folder, 'channel_states.npy'));
                 sessions(session_counter).daq_files.channel_timestamps_file = dir(fullfile(recording_folder, daq_event_folder, 'timestamps.npy'));                
+                sessions(session_counter).daq_files.aux_synchronized_file   = dir(fullfile(recording_folder, daq_aux_folder, 'synchronized_timestamps.npy'));
+                sessions(session_counter).daq_files.aux_timestamps_file     = dir(fullfile(recording_folder, daq_aux_folder, 'timestamps.npy'));
             end
         end
     end
 end
 sessions = get_beh_info(sessions);
+end
+function out = matlab_jsondecode_arrayfun_wrapper(func, array_in, varargin)
+%MATLAB_JSONDECODE_ARRAYFUN_WRAPPER wraps around a nested array so that an
+%arrayfun is applied to cells of structures and structure arrays alike. 
+% From jsondecode.m
+%   Array, when elements are  | cell array
+%    of different data types  |
+%   --------------------------+------------------
+%   Array of booleans         | logical array
+%   --------------------------+------------------
+%   Array of numbers          | double array
+%   --------------------------+------------------
+%   Array of strings          | cellstr 
+%   --------------------------+------------------
+%   Array of objects, when    | structure array
+%    all objects have the     |
+%    same set of names        |
+if iscell(array_in)
+    out = cellfun(func, array_in, varargin{:});
+elseif isstruct(array_in)
+    out = arrayfun(func, array_in, varargin{:});
+end
 end

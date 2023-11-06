@@ -58,6 +58,12 @@ end
 
 
 json=jsondecode(fileread(jsonFile));
+newer_version = '0.6.0';
+if at_least_version(json.GUIVersion, newer_version)
+    timestamp_filename = 'sample_numbers.npy';
+else
+    timestamp_filename = 'timestamps.npy';
+end
 
 %Load appropriate header data from json
 switch type
@@ -80,7 +86,6 @@ f=java.io.File(jsonFile);
 if (~f.isAbsolute())
     f=java.io.File(fullfile(pwd,jsonFile));
 end
-start_timestamp = read_sync_message(dir(fullfile(char(f.getParentFile()), '*sync_message*')));
 f=java.io.File(f.getParentFile(),fullfile(type, header.folder_name));
 if(~f.exists())
     error('Data folder not found');
@@ -88,10 +93,11 @@ end
 folder = char(f.getCanonicalPath());
 D=struct();
 D.Header = header;
+% start_timestamp = read_sync_message(dir(fullfile(char(f.getParentFile()), '*sync_message*')), 'processor_id', , 'stream_id', );
 
 switch type
     case 'continuous'
-        D.Timestamps = readNPY(fullfile(folder,'timestamps.npy'));
+        D.Timestamps = readNPY(fullfile(folder, timestamp_filename));
         contFile=fullfile(folder,'continuous.dat');
         if (continuousmap)
             file=dir(contFile);
@@ -119,8 +125,8 @@ switch type
         D.ElectrodeIndexes = readNPY(fullfile(folder,'spike_electrode_indices.npy'));
         D.SortedIndexes = readNPY(fullfile(folder,'spike_clusters.npy'));
     case 'events'
-        D.Timestamps = readNPY(fullfile(folder,'timestamps.npy'));
-        D.ChannelIndex = readNPY(fullfile(folder,'channels.npy'));
+        D.Timestamps = readNPY(fullfile(folder, timestamp_filename));
+        D.ChannelIndex = readNPY(fullfile(folder, 'channels.npy'));
         f=java.io.File(folder);
         group=char(f.getName());
         if (strncmp(group,'TEXT',4))

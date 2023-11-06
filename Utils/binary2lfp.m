@@ -57,10 +57,6 @@ save(save_file, 'lfp_structure', '-v7.3');
 toc
 fprintf(1, 'Complete. MAT file saved to %s.\n', save_file);
 end
-%%
-function D = loadData(oebin_file)
-D = load_open_ephys_binary_timestamp_rescue(oebin_file,'continuous',1, 'mmap'); % load data in memory mapped mode
-end
 
 
 

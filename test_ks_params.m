@@ -13,6 +13,7 @@ pathToYourConfigFile = pwd; % take from Github folder and put it somewhere else 
 ops.chanMap = fullfile(pathToYourConfigFile, chanMapFile);
 load(ops.chanMap, 'chanMap');
 ops.NchanTOT  = numel(chanMap); % total number of channels in your recording
+
 %% this block runs all the steps of the algorithm
 fprintf('Looking for data inside %s \n', rootZ)
 for i_ops_list = p.Results.start_ops:numel(ops_list)

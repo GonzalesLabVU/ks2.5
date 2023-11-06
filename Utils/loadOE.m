@@ -11,7 +11,7 @@ photodiode_channel_state   = 1;   %  DC channel for cue on
 %%
 %  Load OE info files
 oe_structure.oe_info = jsondecode(fileread(fullfile(session.daq_files.oebin_file.folder, session.daq_files.oebin_file.name)));
-fs = oe_structure.oe_info.continuous.sample_rate;
+fs = oe_structure.oe_info.events{session.daq_event_idx}.sample_rate;
 %
 %  OE array of event channel rising (+n) and falling (-n) crosses
 channel_state_  = readNPY(fullfile(session.daq_files.channel_states_file.folder, session.daq_files.channel_states_file.name));
@@ -24,9 +24,8 @@ channel_sample_ = readNPY(fullfile(session.daq_files.channel_timestamps_file.fol
 %  OE array of timestamps for the continuous signal
 %   Synchronizes the sample numbers in the continuous data to the clock
 %   used across other streams of data (e.g. DC event channels)
-oe_data = load_open_ephys_binary_timestamp_rescue(fullfile(session.daq_files.oebin_file.folder, session.daq_files.oebin_file.name), 'continuous', 1, 'mmap');
+oe_data = load_open_ephys_binary_timestamp_rescue(fullfile(session.daq_files.oebin_file.folder, session.daq_files.oebin_file.name), 'continuous', session.daq_continuous_idx, 'mmap');
 oe_structure.continuous_timestamp = oe_data.Timestamps;
-% oe_structure.continuous_timestamp = readNPY(fullfile(session.daq_files.timestamps_file.folder, session.daq_files.timestamps_file.name));
 %
 %  Decode DC events
 if sum(channel_state_ == -session_time_channel_state) < sum(channel_state_ == session_time_channel_state)
@@ -53,6 +52,10 @@ function photodiode_time_event_out = fix_photodiode_gap(photodiode_time_event, f
 %   no overlap resulting in gaps in "photodiode_event_time".
 %   FIX_PHOTODIODE_GAP removes gaps samller than the duration of a frame.
 gap_threshold = 1 / 60 *fs;
+if isempty(photodiode_time_event)
+    photodiode_time_event_out = photodiode_time_event;
+    return
+end
 photodiode_time_event_gap = photodiode_time_event(2:end, 1) - photodiode_time_event(1:end - 1, 2);
 gap_to_delete             = find(photodiode_time_event_gap < gap_threshold);
 photodiode_time_event_on_new  = photodiode_time_event(:, 1);

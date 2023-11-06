@@ -1,5 +1,15 @@
-function chanMapFile = find_chanMapFile(oe)
-n_chan = oe.oe_info.continuous.num_channels;
+function chanMapFile = find_chanMapFile(session)
+continuous_processor = session.oe_info.continuous(session.daq_continuous_idx);
+n_chan = continuous_processor.num_channels;
+if strcmp(continuous_processor.source_processor_name, 'Neuropix-PXI')
+    xml_ch_map          = get_neuropixels_channel_map_oe(fullfile(session.xml_file.folder, session.xml_file.name));
+    channel_index       = nan(size(continuous_processor.channels));
+    ephys_channels      = cellfun(@(x) contains('channel_metadata', fieldnames(x)), continuous_processor.channels);
+    ephys_channel_index = cellfun(@(x) x.channel_metadata.value, continuous_processor.channels(ephys_channels));
+    channel_index(ephys_channels) = ephys_channel_index;
+    chanMapFile         = create_channel_map_np(xml_ch_map, channel_index);
+    return
+end
 switch n_chan
     case 1
         chanMapFile = 'tungsten_1.mat';
