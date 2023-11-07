@@ -27,11 +27,9 @@ end
 %% Load Data
 % [D, oebin_json] = loadData(oebin_file);
 D = loadData(oebin_file);
-bitVolts     = [D.Header.channels.bit_volts];
+bitVolts = matlab_jsondecode_arrayfun_wrapper(@(x) x.bit_volts, D.Header.channels);
 fs_raw = D.Header.sample_rate;
 downsample_ratio = fs_raw/fs_LFP;
-% bitVolts     = oebin_json.continuous.channels.bit_volts; %load json file and find the bitVolts that was used to convert data into binary
-% sr_recording = oebin_json.continuous.sample_rate;
 %% Filter Design
 [b, a] = butter(n_filt, freq_hi/(fs_raw/2));
 %% Fitlering and Downsampling

@@ -6,8 +6,8 @@ zw_setpath;
 log_file = 'ks_log.txt';
 %%  Find behavior and OE files
 % subject_identifier = {'PIC', 'ROS', 'UNI', 'OLI', 'TRI', 'VIK'};
-subject_identifier = {'OLI'};
-session_range = [112:115];
+subject_identifier = {'VIK'};
+session_range = [85];
 beh_dir = 'F:\Database\VanderbiltDAQ\beh'; % Folder for behavior files
 daq_dir = 'F:\Database\VanderbiltDAQ\Open Ephys'; % Folder for raw ephys data files
 ks_dir  = 'F:\Database\VanderbiltDAQ\KS_out'; % Folder for storing sorted data
@@ -28,8 +28,7 @@ ops_list{1} = ops_;
 %%  Sorting and creating LFP
 % log_ks(sessions, log_file, 0);
 for i = 1:numel(sessions)
-    oe = loadOE(sessions(i));
-    chanMapFile = find_chanMapFile(oe);
+    chanMapFile = find_chanMapFile(sessions(i));
     ks_working_directory = fullfile(ks_dir, sessions(i).subject_identifier);
     rootO = fullfile(ks_working_directory, sessions(i).daq_folder.name);
     sessions(i).ks_folder = test_ks_params(sessions(i).daq_files.continuous_file.folder, rootO, chanMapFile, ops_list, 'start_ops', start_ops, 'remove_duplicate', remove_duplicate);
@@ -51,7 +50,7 @@ log_ks(sessions, log_file, 6);
 for i = 1:numel(sessions)
     oe = loadOE(sessions(i));
     chanMapFile = find_chanMapFile(oe);
-    if ~isempty(regexp(chanMapFile, 'adc', 'once'))
+    if ~isempty(regexp(chanMapFile, 'adc|NP', 'once'))
         create_adc_raw(sessions(i), raw_lfp_dir)
     end
 end

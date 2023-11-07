@@ -3,7 +3,7 @@ function binary2events(oebin_file, save_file, varargin)
 tic
 p = inputParser;
 addParameter(p,'abs_threshold', 0.7, @isnumeric)
-addParameter(p,'gap_threshold_t', 1, @isnumeric)
+addParameter(p,'gap_threshold_t', 0.1, @isnumeric)
 addParameter(p,'target_channel', 129, @isnumeric)
 addParameter(p,'target_processor_idx', 1, @isnumeric)
 
@@ -20,7 +20,7 @@ if ~isfolder(save_dir)
 end
 %% Load Data
 D = loadData(oebin_file, 'processor_idx', target_processor_idx);
-bitVolts = [D.Header.channels.bit_volts];
+bitVolts = matlab_jsondecode_arrayfun_wrapper(@(x) x.bit_volts, D.Header.channels);
 fs_raw = D.Header.sample_rate;
 %%
 analog_events = struct;

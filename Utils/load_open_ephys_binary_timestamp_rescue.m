@@ -59,7 +59,7 @@ end
 
 json=jsondecode(fileread(jsonFile));
 newer_version = '0.6.0';
-if at_least_version(json.GUIVersion, newer_version)
+if at_least_version(newer_version, json.GUIVersion)
     timestamp_filename = 'sample_numbers.npy';
 else
     timestamp_filename = 'timestamps.npy';

@@ -28,16 +28,20 @@ for i_subject = 1:numel(subject_identifier_cell)
             %   Accepts only one processor with the most channels for sorting.
             [~, daq_continuous_idx] = max(arrayfun(@(x) numel(x.channels), oe_info.continuous));
             daq_continuous_folder   = fullfile('continuous', oe_info.continuous(daq_continuous_idx).folder_name);
+            continous_adc_channel   = find(matlab_jsondecode_arrayfun_wrapper(@(x) contains(lower(x.channel_name), {'adc', 'sync'}), oe_info.continuous(daq_continuous_idx).channels));
             %   Assumes the processor with ADC channels only as aux
             %   event/analog channels
             daq_aux_idx             = find(arrayfun(@(continuous) all(matlab_jsondecode_arrayfun_wrapper(@(x) contains(lower(x.channel_name), 'adc'), continuous.channels)), oe_info.continuous));
             daq_aux_folder          = fullfile('continuous', oe_info.continuous(daq_aux_idx).folder_name);
+            aux_adc_channel         = find(matlab_jsondecode_arrayfun_wrapper(@(x) contains(lower(x.channel_name), {'adc', 'sync'}), oe_info.continuous(daq_aux_idx).channels));
             %   Finds the digital inputs via OE I/O
             daq_event_idx           = find(cellfun(@(x) ~isempty(regexpi(x.channel_name, 'fpga', 'once')), oe_info.events));
             daq_event_folder        = fullfile('events', oe_info.events{daq_event_idx}.folder_name);
-            sessions(session_counter).daq_continuous_idx = daq_continuous_idx;
-            sessions(session_counter).daq_aux_idx        = daq_aux_idx;
-            sessions(session_counter).daq_event_idx      = daq_event_idx;
+            sessions(session_counter).daq_continuous_idx    = daq_continuous_idx;
+            sessions(session_counter).daq_aux_idx           = daq_aux_idx;
+            sessions(session_counter).daq_event_idx         = daq_event_idx;
+            sessions(session_counter).continous_adc_channel = continous_adc_channel;
+            sessions(session_counter).aux_adc_channel       = aux_adc_channel;
             sessions(session_counter).daq_files.continuous_file         = dir(fullfile(recording_folder, daq_continuous_folder, 'continuous.dat'));
             sessions(session_counter).daq_files.aux_file                = dir(fullfile(recording_folder, daq_aux_folder, 'continuous.dat'));
             if at_least_version(newer_version, oe_info.GUIVersion)
@@ -59,26 +63,4 @@ for i_subject = 1:numel(subject_identifier_cell)
     end
 end
 sessions = get_beh_info(sessions);
-end
-function out = matlab_jsondecode_arrayfun_wrapper(func, array_in, varargin)
-%MATLAB_JSONDECODE_ARRAYFUN_WRAPPER wraps around a nested array so that an
-%arrayfun is applied to cells of structures and structure arrays alike. 
-% From jsondecode.m
-%   Array, when elements are  | cell array
-%    of different data types  |
-%   --------------------------+------------------
-%   Array of booleans         | logical array
-%   --------------------------+------------------
-%   Array of numbers          | double array
-%   --------------------------+------------------
-%   Array of strings          | cellstr 
-%   --------------------------+------------------
-%   Array of objects, when    | structure array
-%    all objects have the     |
-%    same set of names        |
-if iscell(array_in)
-    out = cellfun(func, array_in, varargin{:});
-elseif isstruct(array_in)
-    out = arrayfun(func, array_in, varargin{:});
-end
 end

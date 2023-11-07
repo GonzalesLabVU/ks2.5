@@ -1,4 +1,4 @@
-function name = create_channel_map_np(xml_ch_map, channel_index)
+function fname = create_channel_map_np(xml_ch_map, channel_index)
 Nchannels = numel(channel_index); % number of channels
 % Re-indexing channels for kilosort.
 [~, chanMap] = sort(channel_index);

@@ -429,3 +429,12 @@ OLI115_2023-10-27_12-11-36.
 @ 30-Oct-2023 11:55:49 Finished generating raw LFP.
 @ 30-Oct-2023 11:55:49 Starting computing hp rms:
 @ 30-Oct-2023 11:56:20 Finished computing hp rms:
+@ 07-Nov-2023 14:48:12 Finished sorting
+VIK085_12023-06-30_10-12-20
+.@ 07-Nov-2023 14:48:12 Starting generating raw LFP:
+@ 07-Nov-2023 14:55:53 Finished sorting
+VIK085_12023-06-30_10-12-20
+.@ 07-Nov-2023 14:55:53 Starting generating raw LFP:
+@ 07-Nov-2023 14:56:15 Finished sorting
+VIK085_12023-06-30_10-12-20
+.@ 07-Nov-2023 14:56:15 Starting generating raw LFP:
