@@ -438,3 +438,8 @@ VIK085_12023-06-30_10-12-20
 @ 07-Nov-2023 14:56:15 Finished sorting
 VIK085_12023-06-30_10-12-20
 .@ 07-Nov-2023 14:56:15 Starting generating raw LFP:
+@ 08-Nov-2023 02:50:12 Finished generating LFP
+VIK085_12023-06-30_10-12-20.
+@ 08-Nov-2023 02:50:12 Finished generating raw LFP.
+@ 08-Nov-2023 02:50:12 Starting computing hp rms:
+@ 08-Nov-2023 02:50:37 Finished computing hp rms:

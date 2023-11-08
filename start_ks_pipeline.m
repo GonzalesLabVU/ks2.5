@@ -48,8 +48,7 @@ create_ks_rms(sessions, raw_lfp_dir);
 log_ks(sessions, log_file, 6);
 %%  Find ADC events
 for i = 1:numel(sessions)
-    oe = loadOE(sessions(i));
-    chanMapFile = find_chanMapFile(oe);
+    chanMapFile = find_chanMapFile(sessions(i));
     if ~isempty(regexp(chanMapFile, 'adc|NP', 'once'))
         create_adc_raw(sessions(i), raw_lfp_dir)
     end
