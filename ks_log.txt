@@ -443,3 +443,24 @@ VIK085_12023-06-30_10-12-20.
 @ 08-Nov-2023 02:50:12 Finished generating raw LFP.
 @ 08-Nov-2023 02:50:12 Starting computing hp rms:
 @ 08-Nov-2023 02:50:37 Finished computing hp rms:
+@ 08-Nov-2023 10:49:52 Finished sorting
+VIK086_12023-07-05_10-08-05
+.@ 08-Nov-2023 11:21:53 Finished sorting
+VIK087_12023-07-06_10-32-20
+.@ 08-Nov-2023 12:06:40 Finished sorting
+VIK088_12023-07-07_10-27-44
+.@ 08-Nov-2023 12:06:40 Starting generating raw LFP:
+@ 08-Nov-2023 22:46:02 Finished generating LFP
+VIK086_12023-07-05_10-08-05.
+@ 09-Nov-2023 14:57:10 Finished generating LFP
+VIK087_12023-07-06_10-32-20.
+@ 09-Nov-2023 16:05:22 Finished sorting
+VIK086_12023-07-05_10-08-05
+.@ 09-Nov-2023 16:05:23 Finished sorting
+VIK087_12023-07-06_10-32-20
+.@ 09-Nov-2023 16:05:23 Finished sorting
+VIK088_12023-07-07_10-27-44
+.@ 09-Nov-2023 16:05:23 Starting generating raw LFP:
+@ 09-Nov-2023 16:05:23 Finished generating raw LFP.
+@ 09-Nov-2023 16:05:23 Starting computing hp rms:
+@ 09-Nov-2023 16:06:32 Finished computing hp rms:

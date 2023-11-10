@@ -7,7 +7,7 @@ log_file = 'ks_log.txt';
 %%  Find behavior and OE files
 % subject_identifier = {'PIC', 'ROS', 'UNI', 'OLI', 'TRI', 'VIK'};
 subject_identifier = {'VIK'};
-session_range = [85];
+session_range = [86:88];
 beh_dir = 'F:\Database\VanderbiltDAQ\beh'; % Folder for behavior files
 daq_dir = 'F:\Database\VanderbiltDAQ\Open Ephys'; % Folder for raw ephys data files
 ks_dir  = 'F:\Database\VanderbiltDAQ\KS_out'; % Folder for storing sorted data
@@ -38,8 +38,8 @@ end
 fclose all
 log_ks(sessions, log_file, 2);
 for i = 1:numel(sessions)
-    create_lfp_raw(sessions(i), raw_lfp_dir);
-    log_ks(sessions(i), log_file, 3);
+%     create_lfp_raw(sessions(i), raw_lfp_dir);
+%     log_ks(sessions(i), log_file, 3);
 end
 log_ks(sessions, log_file, 4);
 %%  Compute RMS from high-pass filtered data

@@ -5,7 +5,7 @@ function create_sparse_neuron_from_sp(sessions, sp_directory, neuron_output_dire
 p = inputParser;
 p.addParameter('adc_input_directory', [], @isfolder);
 p.addParameter('split_by_area', []);
-p.addParameter('stationary', []);
+p.addParameter('stationary', 1);
 p.parse(varargin{:});
 adc_input_directory = p.Results.adc_input_directory;
 split_by_area       = p.Results.split_by_area;
@@ -25,19 +25,35 @@ for i_session = 1:numel(sessions)
     %  Load OE data not used by Kilosort
     oe    = loadOE(session);
     if ~isempty(adc_input_directory)
-        %  Load ADC events if available
-        adc_event_file_path = fullfile(adc_input_directory, ['*', session.subject_identifier, '*', num2str(session.session_number), '*adc_event*']);
+        %  Load ADC events if available (those sampled on the same clock as the continuous data)
+        adc_event_file_path = fullfile(adc_input_directory, ['*', session.subject_identifier, '*', num2str(session.session_number), '_adc_event*']);
         adc_event_file      = dir(adc_event_file_path);
         if isempty(adc_event_file)
             warning('No adc event file found at %s\n', adc_event_file_path)
+            % Creates place holder analog events
+            analog_events = struct;
+            analog_events.time_sample = zeros([0, 2]);
         else
-            load(fullfile(adc_event_file.folder, adc_event_file.name), 'event_structure');
-            analog_events = event_structure.analog_events;
+            adc_loader    = load(fullfile(adc_event_file.folder, adc_event_file.name), 'event_structure');
+            analog_events = adc_loader.event_structure.analog_events;
         end
+        %  Load AUX ADC events if available (those sampled on a different clock from the continuous data)
+        aux_event_file_path = fullfile(adc_input_directory, ['*', session.subject_identifier, '*', num2str(session.session_number), '_aux_adc_event*']);
+        aux_event_file      = dir(aux_event_file_path);
+        if isempty(adc_event_file)
+            warning('No aux adc event file found at %s\n', aux_event_file_path)
+            %   Creates place holder aux events
+            aux_events = struct;
+            aux_events.time_sample = zeros([0, 2]);
+
+        else
+            aux_loader = load(fullfile(aux_event_file.folder, aux_event_file.name), 'event_structure');
+            aux_events = aux_loader.event_structure.analog_events;
+        end
+
     end
-    if ~exist('event_structure', 'var') % Creates place holder analog events
-        analog_events = struct;
-        analog_events.time_sample = zeros([0, 2]);
+    if ~isempty(aux_events(1).time_sample)
+        oe = align_analog_events(oe, analog_events, aux_events);
     end
     %  Load spikes
     sp_filename = sprintf('%s%03.f_sp.mat', session.subject_identifier, session.session_number);

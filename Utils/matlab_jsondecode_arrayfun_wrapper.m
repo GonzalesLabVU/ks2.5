@@ -14,6 +14,10 @@ function out = matlab_jsondecode_arrayfun_wrapper(func, array_in, varargin)
 %   Array of objects, when    | structure array
 %    all objects have the     |
 %    same set of names        |
+if ~exist('array_in', 'var')
+    out = [];
+    return
+end
 if iscell(array_in)
     out = cellfun(func, array_in, varargin{:});
 elseif isstruct(array_in)
