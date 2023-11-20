@@ -1,4 +1,4 @@
-function create_lfp_adc(sessions, lfp_input_directory, lfp_output_directory, channel_map_dir, varargin)
+function create_lfp_adc(sessions, lfp_input_directory, lfp_output_directory, varargin)
 %%CREATE_LFP goes through the behavior files in each SESSIONS and
 %%create neuron files from matching kilosort output
 tic
@@ -45,9 +45,9 @@ for i_session = 1:numel(sessions)
                 LFPData.beh_file      = session.beh_files(i_beh).name;
                 LFPData.daq_session   = session.daq_folder.name;
                 LFPData.task_type     = task_type;
-                LFPData.channel_map   = load(channel_map_dir);
+                LFPData.channel_map   = load(find_chanMapFile(session));
                 LFPData.lfp_parameters= lfp_structure.parameters;
-                save(fullfile(lfp_output_directory, sprintf('%s_LFP', session.beh_files(i_beh).name(1:end - 4))), 'LFPData');
+                save(fullfile(lfp_output_directory, sprintf('%s_LFP', session.beh_files(i_beh).name(1:end - 4))), 'LFPData', '-v7.3');
             end
         toc
 end

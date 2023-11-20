@@ -4,7 +4,14 @@ if ~isfield(MatData_sparse, 'isi_violation') % Skip session w/o neurons
     return
 end
 n_class = numel(MatData_sparse.ClassStructure);
-single_units = find(or(MatData_sparse.ks_label == 2, and((MatData_sparse.amp_rms >= 5), (MatData_sparse.isi_violation <= 1))));
+if isfield(MatData_sparse, 'single_units')
+    if ~isempty(MatData_sparse.single_units)
+        single_units = find(MatData_sparse.single_units);
+    end
+end
+if ~exist('single_units', 'var') % Backward compatible
+    single_units = find(or(MatData_sparse.ks_label == 2, and((MatData_sparse.amp_rms >= 5), (MatData_sparse.isi_violation <= 1))));
+end
 multi_units  = setxor(1:numel(MatData_sparse.ks_label), single_units);
 neuron_idx   = prev_neuron_count + (1:numel(single_units));
 mua_idx      = prev_mua_count + (1:numel(multi_units));

@@ -1,7 +1,8 @@
 function create_sparse_neuron_from_sp(sessions, sp_directory, neuron_output_directory, varargin)
-%%CREATE_NEURON_FROM_KS goes through the behavior files in each SESSIONS and
-%%create neuron files from matching kilosort output. When there is
-%%event information from the ADC channels, add them to trials.
+%%CREATE_NEURON_FROM_SP goes through the behavior files in each SESSIONS
+%%and create neuron files using spike_structure created from matching
+%%kilosort outputs. When there is event information from the ADC channels,
+%%add them to trials.
 p = inputParser;
 p.addParameter('adc_input_directory', [], @isfolder);
 p.addParameter('split_by_area', []);
@@ -21,9 +22,16 @@ addpath(genpath('External')) % path to external functions
 % end
 %%
 for i_session = 1:numel(sessions)
-    session = sessions(i_session);
+    session     = sessions(i_session);
     %  Load OE data not used by Kilosort
-    oe    = loadOE(session);
+    oe          = loadOE(session);
+    %  Load spikes
+    sp_filename = sprintf('%s%03.f_sp.mat', session.subject_identifier, session.session_number);
+    sp_dir      = fullfile(sp_directory, sp_filename);
+    if ~isfile(sp_dir)
+        continue
+    end
+    load(sp_dir, 'sp');
     if ~isempty(adc_input_directory)
         %  Load ADC events if available (those sampled on the same clock as the continuous data)
         adc_event_file_path = fullfile(adc_input_directory, ['*', session.subject_identifier, '*', num2str(session.session_number), '_adc_event*']);
@@ -40,7 +48,7 @@ for i_session = 1:numel(sessions)
         %  Load AUX ADC events if available (those sampled on a different clock from the continuous data)
         aux_event_file_path = fullfile(adc_input_directory, ['*', session.subject_identifier, '*', num2str(session.session_number), '_aux_adc_event*']);
         aux_event_file      = dir(aux_event_file_path);
-        if isempty(adc_event_file)
+        if isempty(aux_event_file)
             warning('No aux adc event file found at %s\n', aux_event_file_path)
             %   Creates place holder aux events
             aux_events = struct;
@@ -50,18 +58,24 @@ for i_session = 1:numel(sessions)
             aux_loader = load(fullfile(aux_event_file.folder, aux_event_file.name), 'event_structure');
             aux_events = aux_loader.event_structure.analog_events;
         end
-
+        hp_rms_file_path    = fullfile(adc_input_directory, ['*', session.subject_identifier, '*', num2str(session.session_number), '*hp_RMS*']);
+        hp_rms_file         = dir(hp_rms_file_path);
+        if isempty(hp_rms_file)
+            warning('No hig-pass RMS file found at %s\n', hp_rms_file_path)
+            rms_structure = [];
+            sp.amp_rms = [];
+            sp.amp_mad = [];
+        else
+            rms_structure = load(fullfile(hp_rms_file.folder, hp_rms_file.name));
+            for i_clu = 1:numel(sp.cluster_tempAmps)
+                sp.amp_rms(i_clu) = sp.cluster_tempAmps(i_clu)/rms_structure.rmsPerChannel(sp.cluster_chan(i_clu));
+                sp.amp_mad(i_clu) = sp.cluster_tempAmps(i_clu)/rms_structure.madPerChannel(sp.cluster_chan(i_clu));
+            end
+        end
     end
-    if ~isempty(aux_events(1).time_sample)
+    if ~isempty(aux_events(1).time_sample) % When multiple processors each record streams of ADC
         oe = align_analog_events(oe, analog_events, aux_events);
     end
-    %  Load spikes
-    sp_filename = sprintf('%s%03.f_sp.mat', session.subject_identifier, session.session_number);
-    sp_dir = fullfile(sp_directory, sp_filename);
-    if ~isfile(sp_dir)
-        continue
-    end
-    load(sp_dir, 'sp');
     if split_by_area
         [area_labels, sp] = parse_sp_by_area(sp);
     else
@@ -104,6 +118,7 @@ for i_session = 1:numel(sessions)
             if stationary
                 MatData = stationarityCheck_wrapper(MatData, 'statecode_threshold', MatData.state_code_threshold - 2);
             end
+            MatData = classify_single_unit(MatData);
             save(fname, 'MatData');
         end
     end
@@ -116,6 +131,9 @@ MatData = AllData;
 new_fieldnames = fieldnames(sp);
 for i = 1:numel(new_fieldnames)
     if and(~isfield(AllData, new_fieldnames{i}), ismember(numel(sp.(new_fieldnames{i})) , [1, size(sp.temps, 1), numel(sp.xcoords), numel(sp.cids)]))
+        MatData.(new_fieldnames{i}) = sp.(new_fieldnames{i});
+    end
+    if strcmp('cluster_waveforms', new_fieldnames{i})
         MatData.(new_fieldnames{i}) = sp.(new_fieldnames{i});
     end
 end

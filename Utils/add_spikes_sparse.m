@@ -2,6 +2,10 @@ function AllData = add_spikes_sparse(AllData, sp, oe, analog_events, task_counte
 %   Decode task type in behavior data
 [~, ~, align_event_order_in_queue] = detect_task_type(AllData);
 %   CONVERTS DATA MATRIX IDX TO TIMESTAMP!
+%   Pads a very short amount of time bins at the end of the timestamps to
+%   escape when KS spits spike times beyond the original data since KS
+%   pads the raw data during processing.
+oe.continuous_timestamp     = [oe.continuous_timestamp; oe.continuous_timestamp(end) + int64(1:100)'];
 ss                          = oe.continuous_timestamp(sp.ss);    % "ss" is MATLAB-generated and thus assumed to use 1-indexing
 photodiode_time_event       = oe.photodiode_time_event;
 adc_helper_time_event       = oe.adc_helper_time_event;
