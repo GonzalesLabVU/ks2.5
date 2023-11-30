@@ -51,4 +51,7 @@ ops.nPCs                = 3; % how many PCs to project the spikes into
 ops.useRAM              = 0; % not yet available
 
 
-%%
+%% Custom parameters
+ops.remove_duplicate = 0;
+ops.channel_separation_um = 80;
+

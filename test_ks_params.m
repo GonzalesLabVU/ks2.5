@@ -2,12 +2,8 @@ function output_folder = test_ks_params(rootZ, rootO, chanMapFile, ops_list, var
 %Edited Mar. 3rd 2023 from official KS2.5 main_kilosort
 %%  backward compatible input parser
 default_start_ops = 0;
-default_remove_duplicate = 0;
-default_channel_separation_um = 80;
 p = inputParser;
 addParameter(p,'start_ops', default_start_ops);
-addParameter(p,'remove_duplicate', default_remove_duplicate);
-addParameter(p,'channel_separation_um', default_channel_separation_um);
 parse(p, varargin{:});
 %%
 addpath(genpath('Kilosort-main')) % path to kilosort folder
@@ -37,8 +33,6 @@ for i_ops_list = p.Results.start_ops:numel(ops_list)
         disp(ops_list{i_ops_list})
         ops = update_ops(ops, ops_list{i_ops_list});
     end
-    ops.remove_duplicate = p.Results.remove_duplicate;
-    ops.channel_separation_um = p.Results.channel_separation_um;
     ops_match_flag = 0; %   Ensure potential existing results were generated w/ the same configuration
     if isfile(current_ops_mat)
         to_load = load(current_ops_mat, 'ops');
