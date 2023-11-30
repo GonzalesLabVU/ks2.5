@@ -37,6 +37,8 @@ for i_ops_list = p.Results.start_ops:numel(ops_list)
         disp(ops_list{i_ops_list})
         ops = update_ops(ops, ops_list{i_ops_list});
     end
+    ops.remove_duplicate = p.Results.remove_duplicate;
+    ops.channel_separation_um = p.Results.channel_separation_um;
     ops_match_flag = 0; %   Ensure potential existing results were generated w/ the same configuration
     if isfile(current_ops_mat)
         to_load = load(current_ops_mat, 'ops');
@@ -76,12 +78,12 @@ for i_ops_list = p.Results.start_ops:numel(ops_list)
         % main tracking and template matching algorithm
         rez = learnAndSolve8b(rez, iseed);
 
-        if p.Results.remove_duplicate == 1
+        if ops.remove_duplicate == 1
             % OPTIONAL: remove double-counted spikes - solves issue in which individual spikes are assigned to multiple templates.
             % See issue 29: https://github.com/MouseLand/Kilosort/issues/29
-            rez = remove_ks2_duplicate_spikes(rez, 'channel_separation_um', p.Results.channel_separation_um);
-        elseif p.Results.remove_duplicate == 2 % Updated remove_duplicate, WIP
-            rez = remove_ks25_duplicate_spikes(rez, 'channel_separation_um', p.Results.channel_separation_um);            
+            rez = remove_ks2_duplicate_spikes(rez, 'channel_separation_um', ops.channel_separation_um);
+        elseif ops.remove_duplicate == 2 % Updated remove_duplicate, WIP
+            rez = remove_ks25_duplicate_spikes(rez, 'channel_separation_um', ops.channel_separation_um);            
         end
         % final merges
         rez = find_merges(rez, 1);
