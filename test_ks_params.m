@@ -3,9 +3,11 @@ function output_folder = test_ks_params(rootZ, rootO, chanMapFile, ops_list, var
 %%  backward compatible input parser
 default_start_ops = 0;
 default_remove_duplicate = 0;
+default_channel_separation_um = 80;
 p = inputParser;
 addParameter(p,'start_ops', default_start_ops);
 addParameter(p,'remove_duplicate', default_remove_duplicate);
+addParameter(p,'channel_separation_um', default_channel_separation_um);
 parse(p, varargin{:});
 %%
 addpath(genpath('Kilosort-main')) % path to kilosort folder
@@ -77,9 +79,9 @@ for i_ops_list = p.Results.start_ops:numel(ops_list)
         if p.Results.remove_duplicate == 1
             % OPTIONAL: remove double-counted spikes - solves issue in which individual spikes are assigned to multiple templates.
             % See issue 29: https://github.com/MouseLand/Kilosort/issues/29
-            rez = remove_ks2_duplicate_spikes(rez, 'channel_separation_um', 80);
+            rez = remove_ks2_duplicate_spikes(rez, 'channel_separation_um', p.Results.channel_separation_um);
         elseif p.Results.remove_duplicate == 2 % Updated remove_duplicate, WIP
-            rez = remove_ks25_duplicate_spikes(rez, 'channel_separation_um', 80);            
+            rez = remove_ks25_duplicate_spikes(rez, 'channel_separation_um', p.Results.channel_separation_um);            
         end
         % final merges
         rez = find_merges(rez, 1);
