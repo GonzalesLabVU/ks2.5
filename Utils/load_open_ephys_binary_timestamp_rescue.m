@@ -93,7 +93,6 @@ end
 folder = char(f.getCanonicalPath());
 D=struct();
 D.Header = header;
-% start_timestamp = read_sync_message(dir(fullfile(char(f.getParentFile()), '*sync_message*')), 'processor_id', , 'stream_id', );
 
 switch type
     case 'continuous'
@@ -111,6 +110,8 @@ switch type
         end
          if samples ~= numel(D.Timestamps)
              warning('Timestamp corruption in: %s', jsonFile)
+             f=java.io.File(jsonFile);
+             start_timestamp = read_sync_message(dir(fullfile(char(f.getParentFile()), '*sync_message*')));
              if ~isempty(start_timestamp)
                  D.Timestamps = start_timestamp + int64(0:(samples - 1))';
              elseif (D.Timestamps(end) - D.Timestamps(1) + 1) == int64(samples)

@@ -1,5 +1,22 @@
-function [neuron_table, mua_table] = sparse_to_single_mat(MatData_sparse, prev_neuron_count, neuron_table, prev_mua_count, mua_table, neuron_output_dir, mua_output_dir)
-MatData_sparse = stationarityCheck_wrapper(MatData_sparse, 'statecode_threshold', MatData_sparse.state_code_threshold - 2); % 2 statecode before trial success are valid trials.
+function [neuron_table, mua_table] = sparse_to_single_mat(sparse_file, subject_identifier, session_number, neuron_table, mua_table, neuron_output_dir, mua_output_dir)
+
+
+[prev_neuron_count, signature] = find_neuron_count(neuron_table, subject_identifier, session_number - 1, 'remove_signature', true);
+prev_mua_count = find_neuron_count(mua_table, subject_identifier, session_number - 1, 'remove_signature', true);
+if isempty(prev_mua_count)
+    prev_mua_count = 0;
+end
+
+loaded = load(sparse_file);
+MatData_sparse = loaded.MatData;
+Filename  = MatData_sparse.beh_file(1:end-4);
+
+if ismember(neuron_table.Filename, Filename)
+    return
+end
+
+
+
 if ~isfield(MatData_sparse, 'isi_violation') % Skip session w/o neurons
     return
 end
@@ -13,10 +30,17 @@ if ~exist('single_units', 'var') % Backward compatible
     single_units = find(or(MatData_sparse.ks_label == 2, and((MatData_sparse.amp_rms >= 5), (MatData_sparse.isi_violation <= 1))));
 end
 multi_units  = setxor(1:numel(MatData_sparse.ks_label), single_units);
-neuron_idx   = prev_neuron_count + (1:numel(single_units));
-mua_idx      = prev_mua_count + (1:numel(multi_units));
-correct_trials_idx = find([MatData_sparse.trials.Statecode] == MatData_sparse.state_code_threshold);
-error_trials_idx   = find(([MatData_sparse.trials.Statecode] >= (MatData_sparse.state_code_threshold - 2)) .* ([MatData_sparse.trials.Statecode] < MatData_sparse.state_code_threshold));
+
+
+
+neuron_idx   = double(prev_neuron_count) + (1:numel(single_units));
+mua_idx      = double(prev_mua_count) + (1:numel(multi_units));
+
+neuron_idx = arrayfun(@(x) add_signature(x, signature), neuron_idx);
+mua_idx = arrayfun(@(x) add_signature(x, signature), mua_idx);
+
+correct_trials_idx = find(([MatData_sparse.trials.Statecode] == MatData_sparse.state_code_threshold) .* (arrayfun(@(x) ~isempty(x.photodiode_on_event), MatData_sparse.trials)));
+error_trials_idx   = find(([MatData_sparse.trials.Statecode] >= (MatData_sparse.state_code_threshold - 2)) .* ([MatData_sparse.trials.Statecode] < MatData_sparse.state_code_threshold) .* (arrayfun(@(x) ~isempty(x.photodiode_on_event), MatData_sparse.trials)));
 
 sparse_trials = MatData_sparse.trials(correct_trials_idx);
 sparse_error_trials = MatData_sparse.trials(error_trials_idx);
@@ -63,7 +87,7 @@ for i_u = 1:numel(single_units)
     end
     Filename  = MatData_sparse.beh_file(1:end-4);
     save_name = sprintf('%s_%05.f', Filename, neuron_idx(i_u));
-    new_row      = {Filename, neuron_idx(i_u), MatData_sparse.cluster_chan(single_units(i_u)), {MatData_sparse.cids(single_units(i_u))}};
+    new_row      = {Filename, neuron_idx(i_u), MatData_sparse.cluster_chan(single_units(i_u)), mat2str(MatData_sparse.cids(single_units(i_u)))};
     neuron_table = [neuron_table; new_row];
     MatData = struct;
     MatData.ntr = single_MatData_sparse{i_u};
@@ -88,9 +112,8 @@ for i_u = 1:numel(multi_units)
         multi_MatData_sparse_err{i_u}(i_trial).stationary = MatData_sparse.stationary(multi_units(i_u), error_trials_idx(i_trial));
         multi_MatData_sparse_err{i_u}(i_trial).trialnum   = error_trials_idx(i_trial);
     end
-    Filename  = MatData_sparse.beh_file(1:end-4);
     save_name = sprintf('%s_mua%05.f', Filename, mua_idx(i_u));
-    new_row   = {Filename, mua_idx(i_u), MatData_sparse.cluster_chan(multi_units(i_u)), {MatData_sparse.cids(multi_units(i_u))}};
+    new_row   = {Filename, mua_idx(i_u), MatData_sparse.cluster_chan(multi_units(i_u)), mat2str(MatData_sparse.cids(multi_units(i_u)))};
     mua_table = [mua_table; new_row];
     MatData   = struct;
     MatData.ntr = multi_MatData_sparse{i_u};
@@ -103,4 +126,8 @@ for i_u = 1:numel(multi_units)
 
 end
 
+end
+function out = add_signature(count, signature)
+count_n_digit = numel(sprintf('%03d', count));
+out = count + str2double(signature) * (10 ^ count_n_digit);
 end
