@@ -86,6 +86,7 @@ f=java.io.File(jsonFile);
 if (~f.isAbsolute())
     f=java.io.File(fullfile(pwd,jsonFile));
 end
+start_timestamp = read_sync_message(dir(fullfile(char(f.getParentFile()), '*sync_message*')));
 f=java.io.File(f.getParentFile(),fullfile(type, header.folder_name));
 if(~f.exists())
     error('Data folder not found');
@@ -93,8 +94,6 @@ end
 folder = char(f.getCanonicalPath());
 D=struct();
 D.Header = header;
-% start_timestamp = read_sync_message(dir(fullfile(char(f.getParentFile()), '*sync_message*')), 'processor_id', , 'stream_id', );
-
 switch type
     case 'continuous'
         D.Timestamps = readNPY(fullfile(folder, timestamp_filename));
