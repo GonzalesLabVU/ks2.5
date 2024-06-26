@@ -1,7 +1,7 @@
 function bound_dur = get_task_trial_bound(AllData, varargin)
 % Get the time duration in seconds to be assigned to a trial around the
 % photodiode event, given the trial type.
-default_padding_dur = 0;
+default_padding_dur = 2;
 p = inputParser;
 addParameter(p, 'padding_dur', default_padding_dur);
 parse(p, varargin{:});
@@ -9,11 +9,11 @@ padding_dur = p.Results.padding_dur;
 task_type = detect_task_type(AllData);
 parameters = AllData.parameters;
 switch task_type
-    case 'odrdist'
-        pre_photodiode_dur  = parameters.FixAquisition + parameters.fixationDuration;
+    case {'odrdist', 'odr_opto_dist'}
+        pre_photodiode_dur  = parameters.ITI_Correct + parameters.FixAquisition + parameters.fixationDuration;
         post_photodiode_dur = 2 * (parameters.stimulusDuration + parameters.delayDuration) + parameters.TargetAquisition + parameters.targetDuration + parameters.ITI_Correct;
     case {'odr', 'biasedodr', 'odr_opto'}
-        pre_photodiode_dur  = parameters.FixAquisition + parameters.fixationDuration;
+        pre_photodiode_dur  = parameters.ITI_Correct + parameters.FixAquisition + parameters.fixationDuration;
         post_photodiode_dur = parameters.stimulusDuration + parameters.delayDuration + parameters.TargetAquisition + parameters.targetDuration + parameters.ITI_Correct;
     case 'fix'
         pre_photodiode_dur  = 0;
