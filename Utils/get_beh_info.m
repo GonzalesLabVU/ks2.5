@@ -1,4 +1,5 @@
 function sessions = get_beh_info(sessions)
+retrieve_counter = 0;
 for i = 1:numel(sessions)
     start_times = zeros(1, numel(sessions(i).beh_files));
     beh_suffix  = zeros(1, numel(sessions(i).beh_files));
@@ -16,5 +17,10 @@ for i = 1:numel(sessions)
     end
     sessions(i).beh_suffix = beh_suffix;
     [~, sessions(i).beh_order] = sort(start_times);
-    fprintf('Retrieved behavior info from %d/%d sessions.\n', i, numel(sessions));
+    if ~isempty(j)
+        retrieve_counter = retrieve_counter + 1;
+        fprintf('Retrieved behavior info from %d/%d sessions.\n', retrieve_counter, numel(sessions));
+    else
+        fprintf('Missing behavior info from %d/%d sessions.\n', i - retrieve_counter, numel(sessions));
+    end
 end

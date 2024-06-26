@@ -1,23 +1,30 @@
-function sessions = find_oe_beh_files(beh_dir, daq_dir, subject_identifier_cell, session_range)
+function sessions = find_oe_beh_files(beh_dir, daq_dir, subject_identifier_cell, session_range_cell)
 %FIND_OE_BEH_FILES locates the OpenEphys file name expected for OE GUI
 %version 0.5.X
 %   Expected subfolder naming conventions
 newer_version = '0.6.0';
 daq_parent_folder = '\\Record Node*\\experiment*\\recording*\\'; % Assumes singular experiment and recording
-if isempty(session_range)
-    session_range = 1:1000;
+
+if isempty(session_range_cell)
+    session_range_cell = cell(size(subject_identifier_cell));
+elseif isnumeric(session_range_cell)
+    session_range_cell = {session_range_cell};
 end
 session_counter = 0;
 for i_subject = 1:numel(subject_identifier_cell)
     subject_identifier = subject_identifier_cell{i_subject};
+    session_range      = session_range_cell{i_subject};
+    if isempty(session_range)
+        session_range = 1:1000;
+    end
     for i = 1:numel(session_range)
         session_identifier = [subject_identifier, sprintf('%03d', session_range(i))];
-        daq_folder = dir(fullfile(daq_dir, ['*', session_identifier, '*']));
+        daq_folder = multi_dir(fullfile(daq_dir, ['*', session_identifier, '*']));
         if ~isempty(daq_folder)
             session_counter = session_counter + 1;
             sessions(session_counter).subject_identifier     = subject_identifier;
             sessions(session_counter).session_number         = session_range(i);
-            sessions(session_counter).beh_files              = dir(fullfile(beh_dir, ['*', subject_identifier, sprintf('%03d', session_range(i)), '*']));
+            sessions(session_counter).beh_files              = multi_dir(fullfile(beh_dir, ['*', subject_identifier, sprintf('%03d', session_range(i)), '*.mat']));
             sessions(session_counter).daq_folder             = daq_folder;
             recording_folder = fullfile(sessions(session_counter).daq_folder.folder, sessions(session_counter).daq_folder.name, daq_parent_folder);
             sessions(session_counter).daq_files.oebin_file   = dir(fullfile(recording_folder, '*oebin'));

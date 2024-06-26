@@ -3,7 +3,7 @@ out_trials = in_trials;
 switch task
     case {'odr', 'biasedodr', 'odr_opto', 'fix'}
         timestamp_names = {'Fix_onT', 'Fix_inT', 'Cue_onT', 'Cue_offT', 'Fix_offT', 'Target_inT'};
-    case 'odrdist'
+    case {'odrdist', 'odr_opto_dist'}
         timestamp_names = {'Fix_onT', 'Fix_inT', 'Cue_onT', 'Cue_offT', 'Dist_onT', 'Dist_offT', 'Fix_offT', 'Target_inT'};
 end
 for i = 1:numel(out_trials)
