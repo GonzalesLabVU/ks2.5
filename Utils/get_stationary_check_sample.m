@@ -5,7 +5,7 @@ parse(p, varargin{:});
 task_type = detect_task_type(MatData);
 sample_shift = arrayfun(@(x) [double(x.photodiode_on_event), nan * find(isempty(x.photodiode_on_event))], MatData.trials);
 switch task_type
-    case {'odr', 'biasedodr', 'odrdist'}
+    case {'odr', 'biasedodr', 'odrdist', 'odr_opto_dist'}
         relative_sample = (- MatData.sample_rate * MatData.parameters.fixationDuration + 1):0;
     case 'fix'
         relative_sample = 0:(MatData.sample_rate * MatData.parameters.fixationDuration - 1);

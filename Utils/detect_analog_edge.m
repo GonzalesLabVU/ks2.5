@@ -19,8 +19,8 @@ if raw_onset(end) > raw_offset(end)
     warning('Incomplete last event. Last onset is %.2f seconds from data end.\n', double([size(data_in, 2) - raw_onset(end)]/fs));
 end
 end
+end
 [onset_new, offset_new] = fix_gap(raw_onset, raw_offset, gap_threshold_sample);
-
 end
 %%
 function [onset_new, offset_new] = fix_gap(onset, offset, gap_threshold_sample)
