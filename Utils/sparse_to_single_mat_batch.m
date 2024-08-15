@@ -25,7 +25,7 @@ for i_subject = 1:numel(subject_identifier)
         [neuron_table, mua_table] = sparse_to_single_mat(sparse_file_path, subject_identifier{i_subject}, session_number(i_sparse), neuron_table, mua_table, subject_sua_output_folder, subject_mua_output_folder);
         writetable(neuron_table, neuron_table_file, 'WriteRowNames',true, 'FileType','spreadsheet');
         writetable(mua_table, mua_table_file, 'WriteRowNames',true, 'FileType','spreadsheet');
-        fprintf('%d of %d sessions with single mat generated for % of %d subjects.\n', i_sparse, numel(sparse_neurons), i_subject, numel(subject_identifier));
+        fprintf('%d of %d sessions with single mat generated for %d of %d subjects.\n', i_sparse, numel(sparse_neurons), i_subject, numel(subject_identifier));
     end
 end
 end

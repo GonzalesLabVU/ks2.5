@@ -3,7 +3,7 @@ p = inputParser;
 addParameter(p, "sample_shift", zeros([numel(MatData.trials), 1]), @isnumeric);
 p.parse(varargin{:});
 sample_shift = p.Results.sample_shift;
-target_trials        = find([MatData.trials.Statecode] >= statecode_threshold);
+target_trials        = find([[MatData.trials.Statecode] >= statecode_threshold] & ~isnan(sample_shift));
 target_fr            = zeros(numel(MatData.cids), numel(target_trials));
 trials               = MatData.trials(target_trials);
 for j = 1:numel(trials)

@@ -29,11 +29,19 @@ for i_ch = 1:numel(target_channel)
     fprintf(1, 'Channel %d started... \n', target_channel(i_ch));
     [onset_sample, offset_sample] = detect_analog_edge(D.Data.Data.mapped(target_channel(i_ch), :), fs_raw, abs_threshold / bitVolts(target_channel(i_ch)), gap_threshold_t);
     if numel(onset_sample) > numel(offset_sample)
-        warning('More adc on event than off event on Channel %d in %s\n', target_channel(i_ch), session.daq_folder.name);
-        offset_sample = [offset_sample; offset_sample(end) + 1];
+        warning('More adc on event than off event on Channel %d in %s\n', target_channel(i_ch), oebin_file);
+        if isempty(offset_sample)
+            offset_sample = size(D.Data.Data.mapped, 2);
+        else
+            offset_sample = [offset_sample; offset_sample(end) + 1];
+        end
     elseif numel(onset_sample) < numel(offset_sample)
-        warning('More adc off event than on event on Channel %d in %s\n', target_channel(i_ch), session.daq_folder.name);
-        onset_sample = [1; onset_sample];
+        warning('More adc off event than on event on Channel %d in %s\n', target_channel(i_ch), oebin_file);
+        if isempty(onset_sample)
+            onset_sample = 1;
+        else
+            onset_sample = [1; onset_sample];
+        end
     end
     analog_events(i_ch).time_sample = [D.Timestamps(onset_sample), D.Timestamps(offset_sample)];
     analog_events(i_ch).channel = D.Header.channels(target_channel(i_ch));

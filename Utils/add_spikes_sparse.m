@@ -25,6 +25,27 @@ bound_dur                   = get_task_trial_bound(AllData);
 n_inbound_samples           = bound_dur * fs_raw;
 trial_time_event_in_session = get_event_in_boundary(oe.session_time_event(task_counter, :), oe.trial_time_event);
 analog_time_event           = analog_events.time_sample;
+
+n_diff_trial = numel(trials) - size(trial_time_event_in_session, 1);
+if n_diff_trial > 0
+    corr_r_thresh = 0.99;
+    corr_r_offset = zeros(1, n_diff_trial + 1);
+    %   Missing trial gate
+    for i_shift = 1:(n_diff_trial + 1)
+        corr_r_offset(i_shift) = corr(diff([trials([1:(end - n_diff_trial)] + i_shift - 1).time])', double(diff(trial_time_event_in_session(:, 1))));
+    end
+    candidate_shift = corr_r_offset > corr_r_thresh;
+    switch sum(candidate_shift)
+        case 0
+            error('Trial mismatch by %d in %s task no. %d, with no likely offsets.', n_diff_trial, sp.session_name{1}, task_counter);
+        case 1
+            to_shift = find(candidate_shift);
+            warning('Trial mismatch by %d in %s task no. %d, offsets were found to be %d trials.', n_diff_trial, sp.session_name{1}, task_counter, i_shift);         
+            trial_time_event_in_session = [oe.session_time_event(task_counter, 1) + repmat(int64([0, 1]), [to_shift - 1, 1]); trial_time_event_in_session; oe.session_time_event(task_counter, 2) + repmat(int64([-1, 0]), [n_diff_trial - to_shift + 1, 1])];
+        otherwise
+            error('Trial mismatch by %d in %s task no. %d, with more than 1 likely offsets.', n_diff_trial, sp.session_name{1}, task_counter)         
+    end
+end
 for i = 1:numel(trials)
 % parfor i = 1:numel(trials)
     cpu_trial_to_photodiode_latency = trials(i).timestamp_queue(min(align_event_order_in_queue, numel(trials(i).timestamp_queue))) - trials(i).time;

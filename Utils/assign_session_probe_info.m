@@ -53,6 +53,6 @@ sp.cluster_depth_from_1st_spike = channel_depth_from_1st_spike(sp.cluster_chan);
 end
 function out = get_channel_count(probe)
 probe_list = {'Plexon-32S', 'Plexon-16V', 'FHC-tungsten', 'DBC-DA128-2', 'DBC-DA128-2-fiber', 'NP1010', 'NP1015'};
-channel_count_list = [32, 16, 1, 128, 128, 384, 384];
+channel_count_list = [32, 16, 1, 128, 128, 383, 383];
 out = channel_count_list(ismember(probe_list, probe));
 end
