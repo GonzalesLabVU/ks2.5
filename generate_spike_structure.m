@@ -3,13 +3,13 @@ clear
 fclose all;
 zw_setpath;
 %%  Convert Kilosort output to matlab records
-ks_dir  = 'Z:\Development_project_2019\VanderbiltDAQ\KS_out'; % Folder for storing sorted data
+ks_dir  = 'F:\Database\VanderbiltDAQ\KS_out'; % Folder for storing sorted data
 ks_output_dirs = dir(fullfile(ks_dir, '*\*\1\kilosort3*'));
 sp_dir  = 'F:\Database\VanderbiltDAQ\spike_structure'; % Folder for storing filtered and downsampled LFP data
 probe_table = readtable('C:\Users\cclab\Downloads\Protocol_book_upload.xlsx', 'Sheet', 'probe');
 session_table = readtable('C:\Users\cclab\Downloads\Protocol_book_upload.xlsx', 'Sheet', 'session');
 %%
-subject_identifier = {'UNI'};
+subject_identifier = {'PIC'};
 subject_pattern = strjoin(subject_identifier, '|');
 session_pattern = '\d{3}';
 exp_pattern     = sprintf('(%s)%s', subject_pattern, session_pattern);

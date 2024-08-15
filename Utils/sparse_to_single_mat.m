@@ -1,4 +1,21 @@
-function [neuron_table, mua_table] = sparse_to_single_mat(MatData_sparse, prev_neuron_count, neuron_table, prev_mua_count, mua_table, neuron_output_dir, mua_output_dir)
+function [neuron_table, mua_table] = sparse_to_single_mat(sparse_file, subject_identifier, session_number, neuron_table, mua_table, neuron_output_dir, mua_output_dir)
+
+
+[current_neuron_count, signature] = find_neuron_count(neuron_table, subject_identifier, session_number, 'remove_signature', true);
+prev_neuron_count = find_neuron_count(neuron_table, subject_identifier, session_number - 1, 'remove_signature', true);
+prev_mua_count = find_neuron_count(mua_table, subject_identifier, session_number - 1, 'remove_signature', true);
+if current_neuron_count > prev_neuron_count
+    return
+end
+if isempty(prev_mua_count)
+    prev_mua_count = 0;
+end
+
+
+
+
+loaded = load(sparse_file);
+MatData_sparse = loaded.MatData;
 MatData_sparse = stationarityCheck_wrapper(MatData_sparse, 'statecode_threshold', MatData_sparse.state_code_threshold - 2); % 2 statecode before trial success are valid trials.
 if ~isfield(MatData_sparse, 'isi_violation') % Skip session w/o neurons
     return
@@ -13,8 +30,15 @@ if ~exist('single_units', 'var') % Backward compatible
     single_units = find(or(MatData_sparse.ks_label == 2, and((MatData_sparse.amp_rms >= 5), (MatData_sparse.isi_violation <= 1))));
 end
 multi_units  = setxor(1:numel(MatData_sparse.ks_label), single_units);
-neuron_idx   = prev_neuron_count + (1:numel(single_units));
-mua_idx      = prev_mua_count + (1:numel(multi_units));
+
+
+
+neuron_idx   = double(prev_neuron_count) + (1:numel(single_units));
+mua_idx      = double(prev_mua_count) + (1:numel(multi_units));
+
+neuron_idx = arrayfun(@(x) add_signature(x, signature), neuron_idx);
+mua_idx = arrayfun(@(x) add_signature(x, signature), mua_idx);
+
 correct_trials_idx = find([MatData_sparse.trials.Statecode] == MatData_sparse.state_code_threshold);
 error_trials_idx   = find(([MatData_sparse.trials.Statecode] >= (MatData_sparse.state_code_threshold - 2)) .* ([MatData_sparse.trials.Statecode] < MatData_sparse.state_code_threshold));
 
@@ -103,4 +127,8 @@ for i_u = 1:numel(multi_units)
 
 end
 
+end
+function out = add_signature(count, signature)
+count_n_digit = numel(sprintf('%03d', count));
+out = count + str2double(signature) * (10 ^ count_n_digit);
 end

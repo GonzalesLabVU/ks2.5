@@ -7,10 +7,12 @@ p = inputParser;
 p.addParameter('adc_input_directory', [], @isfolder);
 p.addParameter('split_by_area', []);
 p.addParameter('stationary', 1);
+p.addParameter('add_rs', false);
 p.parse(varargin{:});
 adc_input_directory = p.Results.adc_input_directory;
 split_by_area       = p.Results.split_by_area;
-stationary           = p.Results.stationary;
+stationary          = p.Results.stationary;
+add_rs          = p.Results.add_rs;
 %
 tic
 %%
@@ -98,12 +100,18 @@ for i_session = 1:numel(sessions)
         task_counter = task_counter + 1;
         %   Temp AllData structure with spike time added
         for sp_idx = 1:numel(sp)
-            fname = fullfile(neuron_output_directory, sprintf('%s%s_sparse', session.beh_files(i_beh).name(1:end - 4), area_labels{sp_idx}));
+            if add_rs
+                fname_suffix = '_orig_index';
+            else
+                fname_suffix = '_sparse';
+            end
+            fname = fullfile(neuron_output_directory, sprintf('%s%s%s', session.beh_files(i_beh).name(1:end - 4), area_labels{sp_idx}, fname_suffix));
+
             if isfile(fname)
                 continue
             end
             sp_single = sp(sp_idx);
-            AllData_c = add_spikes_sparse(AllData, sp_single, oe, analog_events, task_counter);
+            AllData_c = add_spikes_sparse(AllData, sp_single, oe, analog_events, task_counter, 'add_rs', add_rs);
             toc
             %
             AllData_c.trials = rmfield(AllData_c.trials, {'eye_time', 'eye_loc'});

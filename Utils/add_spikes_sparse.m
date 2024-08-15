@@ -1,4 +1,9 @@
-function AllData = add_spikes_sparse(AllData, sp, oe, analog_events, task_counter)
+function AllData = add_spikes_sparse(AllData, sp, oe, analog_events, task_counter, varargin)
+p = inputParser;
+p.addParameter('add_rs', false); % Raw ss, relative to raw data index
+p.parse(varargin{:});
+add_rs = p.Results.add_rs;
+
 %   Decode task type in behavior data
 [~, ~, align_event_order_in_queue] = detect_task_type(AllData);
 %   CONVERTS DATA MATRIX IDX TO TIMESTAMP!
@@ -56,16 +61,19 @@ for i = 1:numel(trials)
     trials(i).trial_on_event        = trial_time_event_in_trial(1) - ss_offset;
     [ss_in_bound, s_idx_in_bound]   = get_event_in_boundary(photodiode_time_event_in_trial(1, 1) + int64(n_inbound_samples .* [-1, 1] + [0, -1]), ss);
     trials(i).ss                    = sparse(ss_in_bound - ss_offset, int64(clu(s_idx_in_bound)), true(size(ss_in_bound)), sum(n_inbound_samples), n_cids);
+    if add_rs
+        trials(i).rs = sparse(ss_in_bound - ss_offset, int64(clu(s_idx_in_bound)), double(sp.ss(s_idx_in_bound)), sum(n_inbound_samples), n_cids);
+    end
     if ~isempty(analog_time_event_in_trial)
-        trials(i).analog_on_event  = analog_time_event_in_trial(1) - ss_offset;
-        trials(i).analog_off_event = analog_time_event_in_trial(2) - ss_offset;
+        trials(i).analog_on_event  = analog_time_event_in_trial(:, 1) - ss_offset;
+        trials(i).analog_off_event = analog_time_event_in_trial(:, 2) - ss_offset;
     else
         trials(i).analog_on_event  = int64([]);
         trials(i).analog_off_event = int64([]);
     end
     if ~isempty(adc_helper_time_event_in_trial)
-        trials(i).adc_helper_on_event  = adc_helper_time_event_in_trial(1) - ss_offset;
-        trials(i).adc_helper_off_event = adc_helper_time_event_in_trial(2) - ss_offset;
+        trials(i).adc_helper_on_event  = adc_helper_time_event_in_trial(:, 1) - ss_offset;
+        trials(i).adc_helper_off_event = adc_helper_time_event_in_trial(:, 2) - ss_offset;
     else
         trials(i).adc_helper_on_event  = int64([]);
         trials(i).adc_helper_off_event = int64([]);

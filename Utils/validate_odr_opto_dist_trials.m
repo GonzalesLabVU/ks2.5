@@ -9,12 +9,12 @@ helper_on       = cellfun(@(x) ~isempty(x), {MatData.trials.adc_helper_on_event}
 valid_stim      = logical(laser_delivered);
 valid_control   = logical(~laser_delivered);
 
-MatData.prev_class    = prev_class;
-MatData.valid_stim    = valid_stim;
-MatData.valid_control = valid_control;
-MatData.photodiode_on = photodiode_on;
-MatData.valid_lead    = false(size(valid_stim));
-% MatData.valid_lead(find(prev_correct) - 1) = true;
+MatData.current_correct = current_correct;
+MatData.prev_class      = prev_class;
+MatData.valid_stim      = valid_stim;
+MatData.valid_control   = valid_control;
+MatData.photodiode_on   = photodiode_on;
+MatData.valid_lead      = false(size(valid_stim));
 MatData.valid_lead(find(prev_correct) - 1) = true;
 
 MatData.current_class = [MatData.trials.visual_angle_1];

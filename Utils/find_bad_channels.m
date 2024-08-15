@@ -12,11 +12,13 @@ for i_session = 1:numel(sessions)
         fprintf(1, '%s already exists.\n', save_file)
     else
         fprintf(1, 'Start zw_computeRawPSD on %s.\n', session_name);
-        [psdPerChannel, f] = zw_computeRawPSD(sessions(i_session).ks_folder, 1);
-        regress_out        = noise_color(psdPerChannel, f);
+        [psdPerChannel, f] = zw_computeRawPSD(sessions(i_session).ks_folder);
+        regress_out        = noise_color(psdPerChannel, 'f', f);
         ic = kmeans(regress_out', 2);
         % Populous cluster
         pop_ic = round(mean(ic));
+        % Bad channels expected to be more brownian (quicker drop-off at
+        % higher frequency).
         if mean(regress_out(1, ic == pop_ic)) <= mean(regress_out(1, ic ~= pop_ic))
             warning('Atypical noise color distribution, no bad channels labeled in %s', sessions(i_session).ks_folder)
         else

@@ -13,8 +13,8 @@ windows = (0:ratio_bin - 1) + (1:ratio_step:(numel(bin_edges) - 1))';
 bin_edges = (t_range(1) - (bin_width - step)/2):fine_step:(t_range(2) + (bin_width - step)/2);
 if nargout > 1
     bin_centers = bin_edges(1:end - 1) + diff(bin_edges)./2;
-    t_centers   = sum(bin_centers(windows), 2)/size(windows, 2);
+    t_centers   = sum(reshape(bin_centers(windows), size(windows)), 2)/size(windows, 2);
 end
 fine_spike_count = histcounts(st, bin_edges);
-psth = sum(fine_spike_count(windows), 2)'/bin_width;
+psth = sum(reshape(fine_spike_count(windows), size(windows)), 2)'/bin_width;
 end

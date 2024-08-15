@@ -27,7 +27,7 @@ analog_events = struct;
 for i_ch = 1:numel(target_channel)
     toc
     fprintf(1, 'Channel %d started... \n', target_channel(i_ch));
-    [onset_sample, offset_sample] = detect_analog_edge(D.Data.Data.mapped(target_channel(i_ch), :) * bitVolts(target_channel(i_ch)), fs_raw, abs_threshold, gap_threshold_t);
+    [onset_sample, offset_sample] = detect_analog_edge(D.Data.Data.mapped(target_channel(i_ch), :), fs_raw, abs_threshold / bitVolts(target_channel(i_ch)), gap_threshold_t);
     if numel(onset_sample) > numel(offset_sample)
         warning('More adc on event than off event on Channel %d in %s\n', target_channel(i_ch), session.daq_folder.name);
         offset_sample = [offset_sample; offset_sample(end) + 1];

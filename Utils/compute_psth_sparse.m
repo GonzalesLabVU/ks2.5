@@ -1,8 +1,10 @@
-function [psth, t_centers] = compute_psth_sparse(MatData, bin_width, step, t_range, statecode_threshold, varargin)
+function [psth, t_centers, target_trials] = compute_psth_sparse(MatData, bin_width, step, t_range, statecode_threshold, varargin)
 p = inputParser;
 addParameter(p, "align_event", 'photodiode_on_event', @ischar);
+addParameter(p, "apply_stationary", true, @islogical);
 p.parse(varargin{:});
 align_event = p.Results.align_event;
+apply_stationary = p.Results.apply_stationary;
 t_shift = arrayfun(@(x) [double(x.(align_event))/MatData.sample_rate, nan * find(isempty(x.(align_event)))], MatData.trials);
 target_trials = find([MatData.trials.Statecode] >= statecode_threshold);
 %   Find ss size
@@ -32,5 +34,7 @@ for j = 1:numel(MatData.trials)
         psth(j, k, :) = zw_spike_time_to_psth(st, bin_width, step, t_range + t_shift(j));
     end
 end
-psth = psth .* stationary_mask;
+if apply_stationary
+    psth = psth .* stationary_mask;
+end
 end

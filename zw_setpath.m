@@ -15,4 +15,4 @@ for i = 1:numel(external_packages)
     end
 end
 addpath(genpath('Utils'));
-addpath('Analysis');
+addpath(genpath('Analysis'));

@@ -7,7 +7,8 @@ sample_shift = arrayfun(@(x) [double(x.photodiode_on_event), nan * find(isempty(
 switch task_type
     case {'odr', 'biasedodr', 'odrdist', 'odr_opto_dist'}
         relative_sample = (- MatData.sample_rate * MatData.parameters.fixationDuration + 1):0;
-    case 'fix'
+    case {'fix', 'passive'}
+        sample_shift(:) = 1;
         relative_sample = 0:(MatData.sample_rate * MatData.parameters.fixationDuration - 1);
     case 'odr_opto'
         relative_sample = (- MatData.sample_rate * MatData.parameters.fixationDuration + 1):(- MatData.sample_rate * MatData.parameters.fixationDuration / 2);

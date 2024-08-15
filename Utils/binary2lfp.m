@@ -38,13 +38,16 @@ time_sample = downsample(D.Timestamps, fs_raw/fs_LFP);
 n_chan = size(D.Data.Data.mapped, 1);
 lfp_size = [n_chan, numel(time_sample)];
 lfp = NaN(lfp_size);
+Data_all = D.Data.Data.mapped; %convert data to double precision
 for Channel = 1:lfp_size(1)
     toc
     fprintf(1, 'Channel %d started... \n', Channel);
-    Data = double(D.Data.Data.mapped(Channel, :)) * bitVolts(Channel); %convert data to double precision
+%     Data = double(D.Data.Data.mapped(Channel, :)) * bitVolts(Channel); %convert data to double precision
+    Data = double(Data_all(Channel, :)) .* bitVolts(Channel);
     signal = filtfilt(b, a, Data);
     lfp(Channel, :) = downsample(signal, downsample_ratio);
 end
+clear Data_all
 %%
 lfp_structure.lfp         = lfp;
 lfp_structure.time_sample = time_sample;

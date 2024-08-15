@@ -31,7 +31,7 @@ for i_session = 1:numel(sessions)
                 task_counter = task_counter + 1;
                 if task_counter ~= session.beh_suffix(i_beh)
                     warning('Behavior file suffix mismatch:\n%s is file %d in sesssion.\n', session.beh_files(i_beh).name, task_counter)
-                    task_counter = session.beh_suffix(i_beh);
+%                     task_counter = session.beh_suffix(i_beh);
                 end
                 %   Find only trials in the current task
                 %

@@ -1,7 +1,7 @@
 function out_trials = verbose_timestamps(in_trials, task)
 out_trials = in_trials;
 switch task
-    case {'odr', 'biasedodr', 'odr_opto', 'fix'}
+    case {'odr', 'biasedodr', 'odr_opto', 'fix', 'passive'}
         timestamp_names = {'Fix_onT', 'Fix_inT', 'Cue_onT', 'Cue_offT', 'Fix_offT', 'Target_inT'};
     case {'odrdist', 'odr_opto_dist'}
         timestamp_names = {'Fix_onT', 'Fix_inT', 'Cue_onT', 'Cue_offT', 'Dist_onT', 'Dist_offT', 'Fix_offT', 'Target_inT'};

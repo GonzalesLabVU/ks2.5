@@ -15,7 +15,7 @@ switch task_type
     case {'odr', 'biasedodr', 'odr_opto'}
         pre_photodiode_dur  = parameters.ITI_Correct + parameters.FixAquisition + parameters.fixationDuration;
         post_photodiode_dur = parameters.stimulusDuration + parameters.delayDuration + parameters.TargetAquisition + parameters.targetDuration + parameters.ITI_Correct;
-    case 'fix'
+    case {'fix', 'passive'}
         pre_photodiode_dur  = 0;
         post_photodiode_dur = parameters.FixAquisition + parameters.fixationDuration + parameters.ITI_Correct;
         padding_dur         = 1;
