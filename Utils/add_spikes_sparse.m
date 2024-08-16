@@ -26,6 +26,11 @@ n_inbound_samples           = bound_dur * fs_raw;
 trial_time_event_in_session = get_event_in_boundary(oe.session_time_event(task_counter, :), oe.trial_time_event);
 analog_time_event           = analog_events.time_sample;
 
+if add_rs
+    sp_ss_in = sp.ss(ss_in_idx);
+end
+
+
 n_diff_trial = numel(trials) - size(trial_time_event_in_session, 1);
 if n_diff_trial > 0
     corr_r_thresh = 0.99;
@@ -83,7 +88,7 @@ for i = 1:numel(trials)
     [ss_in_bound, s_idx_in_bound]   = get_event_in_boundary(photodiode_time_event_in_trial(1, 1) + int64(n_inbound_samples .* [-1, 1] + [0, -1]), ss);
     trials(i).ss                    = sparse(ss_in_bound - ss_offset, int64(clu(s_idx_in_bound)), true(size(ss_in_bound)), sum(n_inbound_samples), n_cids);
     if add_rs
-        trials(i).rs = sparse(ss_in_bound - ss_offset, int64(clu(s_idx_in_bound)), double(sp.ss(s_idx_in_bound)), sum(n_inbound_samples), n_cids);
+        trials(i).rs = sparse(ss_in_bound - ss_offset, int64(clu(s_idx_in_bound)), double(sp_ss_in(s_idx_in_bound)), sum(n_inbound_samples), n_cids);
     end
     if ~isempty(analog_time_event_in_trial)
         trials(i).analog_on_event  = analog_time_event_in_trial(:, 1) - ss_offset;
