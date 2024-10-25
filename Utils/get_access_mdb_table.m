@@ -6,7 +6,7 @@ if isempty(select)
     select = {'*'};
 end
 select_clause = 'SELECT ';
-from_clause = 'FROM ';
+from_clause = ' FROM ';
 select_clause = [select_clause, strjoin(select, ',')];
 from_clause = [from_clause, strjoin(from, ',')];
 sql_query = [select_clause, from_clause];
